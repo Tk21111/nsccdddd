@@ -1,21 +1,14 @@
 import { createAndWriteFile , readFile , updateFile , deleteFile } from "../fileManagement";
 
-const setUser = async () => {
-    const high = 200;
-    const weight = 20;
-    const age = 30;
-    const hard = 5;
+//data need to be obj type ex.{"username" : "input username"} and so on
+const setUser = async (data) => {
 
-    await createAndWriteFile('userConfig.json', {"ibm": weight/high*high, "age" : age , "hard" : hard})
+    await createAndWriteFile('userConfig.json', data)
 }
 
-const updateUser = async () => {
-    const high = 200;
-    const weight = 20;
-    const age = 30;
-    const hard = 5;
+const updateUser = async (data) => {
 
-    await updateFile('userConfig.json' ,  {"ibm": weight/high*high, "age" : age , "hard" : hard} )
+    await updateFile('userConfig.json' ,  data )
 }
 
 export {setUser};
