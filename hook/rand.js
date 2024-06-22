@@ -37,6 +37,10 @@ async function select(){
         foods = foodList['list_500']
     }
 
+
+    foods = foods.filter(food => !User.allegic.some(allergicItem => food.includes(allergicItem)));
+
+
     //random food 
     let food = foods[Math.floor(Math.random()*foods.length)]
 
