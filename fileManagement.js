@@ -1,16 +1,15 @@
 import * as FileSystem from 'expo-file-system';
 
 
-const createAndWriteFile = async (flieName) => {
+const createAndWriteFile = async (flieName ,data) => {
 
     const jsonFilePath = `${FileSystem.documentDirectory}${flieName}`;
 
-    const data = { message: 'Hello, this is a JSON file!' };
     const content = JSON.stringify(data);
 
     try {
         await FileSystem.writeAsStringAsync(jsonFilePath, content);
-        console.log('JSON file written successfully!');
+        //console.log('JSON file written successfully!');
     } catch (error) {
         console.error('Error writing JSON file:', error);
     }
@@ -23,21 +22,29 @@ const readFile = async (flieName) => {
     try {
         const content = await FileSystem.readAsStringAsync(jsonFilePath);
         const data = JSON.parse(content);
-        console.log('JSON file content:', data);
+        console.log(data)
+        return data
     } catch (error) {
         console.error('Error reading JSON file:', error);
     }
 };
 
-const updateFile = async (flieName) => {
+const updateFile = async (flieName , data) => {
     const jsonFilePath = `${FileSystem.documentDirectory}${flieName}`;
 
-    const updatedData = { message: 'Updated content!' };
-    const updatedContent = JSON.stringify(updatedData);
+    let preData = await readFile(flieName);
+    for (let i of Object.keys(data)){
+        preData[i] = data[i]
+    }
+    const updatedContent = JSON.stringify(preData);
+    /*
+    console.log('update');
+    console.log(updatedContent)
+    */
 
     try {
         await FileSystem.writeAsStringAsync(jsonFilePath, updatedContent);
-        console.log('JSON file updated successfully!');
+        //console.log('JSON file updated successfully!');
     } catch (error) {
         console.error('Error updating JSON file:', error);
     }
