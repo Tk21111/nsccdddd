@@ -5,7 +5,6 @@ import { randFood , rerand } from './hook/rand';
 import {setUser , updateUser} from './hook/user';
 
 const App = () => {
-  
   x = {"test" : "test"}
   return (
     <View>
@@ -13,7 +12,8 @@ const App = () => {
       <Button title="creat full random / can be use with re-random alltogether" onPress={() => {randFood()}} />
       <Button title="rerandom food" onPress={() => {rerand()}} />
       <Button title="Read JSON File" onPress={() => {readFile('data.json')}} />
-      <Button title="Update JSON File" onPress={() => {updateFile('data.json')}} />
+      <Button title="readuser" onPress={() => {readFile('userConfig.json')}} />
+      <Button title="Set user" onPress={() => {setUser({"username" : "anme" , "bmi" : 20 , "cal" : 2000 })}} />
       <Button title="Delete JSON File" onPress={() => {deleteFile('data.json')}} />
       <Text>Check console for logs</Text>
     </View>

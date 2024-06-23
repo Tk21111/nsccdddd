@@ -2,12 +2,24 @@ import { createAndWriteFile , readFile , updateFile , deleteFile } from "../file
 
 async function select(){
     //get all fix value
-    const foodList = require('../food.json');
-    const User = require('../userConfig.json');
+
+    //for testing only change it when hook the add food list func 
+    const foodList =  require('../food.json');
+
+    /*
+    console.log('food list');
+    console.log(foodList);
+    */
+    const User = await readFile('userConfig.json');
+
+    /*
+    console.log('User');
+    console.log(User)
+    */
 
     //assign to more specific
     //can be modify with logic
-    let cal = User['cal'];
+    let cal = User['cal'] /2;
     let foods;
     let dateobj = new Date();
     let dateOnly = dateobj.toISOString().split('T')[0];
@@ -16,10 +28,10 @@ async function select(){
 
     if (data[dateOnly]){
         for (let n of data[dateOnly]){
-            cal -= n.cal;
+            cal -= (n.cal /2);
         }
-        if (data[dateOnly].excercise){
-            cal += data[dateOnly].excercise
+        if (User.excercise){
+            cal += User.excercise
         }
     };
 
@@ -33,13 +45,14 @@ async function select(){
         foods = foodList['list_1500']
     } else if (cal >=1000){
         foods = foodList['list_1000']
-    } else if (cal >=500){
+    } else if (cal >=0){
         foods = foodList['list_500']
     }
 
-
-    foods = foods.filter(food => !User.allegic.some(allergicItem => food.includes(allergicItem)));
-
+    if (User.allegic){
+        foods = foods.filter(food => !User.allegic.some(allergicItem => food.includes(allergicItem)));
+    }
+    
 
     //random food 
     let food = foods[Math.floor(Math.random()*foods.length)]
