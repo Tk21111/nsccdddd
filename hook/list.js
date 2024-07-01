@@ -16,4 +16,35 @@ const foodListUpdate = async (data) => {
     await createAndWriteFile('food.json' , prv)
 }
 
-export {foodListUpdate};
+//input : list 
+const foodListFilter = async(data) => {
+    let prv = await readFile('food.json');
+
+    console.log(prv)
+    const key = Object.keys(prv);
+    if (typeof data ===  'list'){
+        for (let f of data){
+            for (let i of key){
+                let objPrv = prv[i];
+         
+                prv[i] = objPrv.filter(val => f !== val.ingredent);
+             }
+        }
+    } else {
+        for (let i of key){
+            let objPrv = prv[i];
+                prv[i] = objPrv.filter(val => data !== val.ingredent);
+         }
+        
+    }
+    try {
+        console.log(prv)
+        await createAndWriteFile('food.json', prv)
+    } catch {
+        console.log('fail')
+    }
+    
+
+}
+
+export {foodListUpdate , foodListFilter};

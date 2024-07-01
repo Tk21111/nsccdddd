@@ -4,7 +4,7 @@ async function select(){
     //get all fix value
 
     //for testing only change it when hook the add food list func 
-    const foodList =  require('../food.json');
+    const foodList =  await readFile('food.json');
 
     /*
     console.log('food list');
