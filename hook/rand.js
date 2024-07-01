@@ -39,13 +39,13 @@ async function select(){
     //compare for faster and easier coding (legacy code from py)
 
     //some logic whith excercise add here
-    if (cal >= 2000){
+    if (cal >= 2000 && foodList.list_2000.length != 0){
         foods = foodList['list_2000']
-    } else if (cal >=1500){
+    } else if (cal >=1500 && foodList.list_1500.length != 0){
         foods = foodList['list_1500']
-    } else if (cal >=1000){
+    } else if (cal >=1000  && foodList.list_1000.length != 0){
         foods = foodList['list_1000']
-    } else if (cal >=0){
+    } else if (cal >=0  && foodList.list_500.length != 0){
         foods = foodList['list_500']
     }
 
