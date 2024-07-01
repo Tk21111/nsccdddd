@@ -123,5 +123,7 @@ const rerand = async (pos) => {
     const select = await select();
     
     data[dateOnly][pos] = select
+
+    await createAndWriteFile('data.json' , data)
 }
 export {randFood , rerand};
