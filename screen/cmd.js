@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Button, Text } from 'react-native';
 import { createAndWriteFile, readFile, deleteFile, updateFile } from './../fileManagement';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { randFood, rerand } from './../hook/rand';
 import { setUser, updateUser } from './../hook/user';
 import { foodListFilter, foodListUpdate } from './../hook/list';
@@ -10,10 +10,10 @@ const Cmd = () => {
   const navigation = useNavigation();
   const [userConfig, setUserConfig] = useState(null);
 
-  useEffect(() => {
+  const fetchUserConfig = async () => {
     let config;
     try {
-      config = readFile('userConfigg.json');
+      config = await readFile('userConfigg.json'); // Assuming readFile returns a promise
     } catch {
       config = false;
     }
@@ -23,7 +23,19 @@ const Cmd = () => {
     } else {
       navigation.navigate('Createuser');
     }
-  }, [userConfig]);
+  };
+
+  // Initial check when component mounts
+  useEffect(() => {
+    fetchUserConfig();
+  }, [navigation]);
+
+  // Re-check userConfig whenever the screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      fetchUserConfig();
+    }, [navigation])
+  );
 
   console.log(userConfig);
   if (!userConfig) {
