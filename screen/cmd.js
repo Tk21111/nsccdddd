@@ -25,6 +25,23 @@ const Cmd = () => {
     }
   };
 
+  const checkDate = async () => {
+    let dateobj = new Date();
+    let dateOnly = dateobj.toISOString().split('T')[0];
+
+    /*
+    const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const utc7Time = new Date(utcTime + (7 * 3600000));
+    */
+
+    data = await readFile('data.json');
+
+    console.log(data)
+    if (!data[dateOnly]){
+      await randFood();
+      console.log('rerand')
+    };
+  }
   // Initial check when component mounts
   useEffect(() => {
     fetchUserConfig();
@@ -34,6 +51,7 @@ const Cmd = () => {
   useFocusEffect(
     useCallback(() => {
       fetchUserConfig();
+      checkDate();
     }, [navigation])
   );
 
@@ -47,6 +65,7 @@ const Cmd = () => {
       <Button title="Create full random / can be used with re-random all together" onPress={() => { randFood(); }} />
       <Button title="Re-random food" onPress={() => { rerand(); }} />
       <Button title="Read JSON File" onPress={() => { readFile('data.json'); }} />
+      <Button title="Auto run generate menu" onPress={() => { checkDate() }} />
       <Button title="Read user" onPress={() => { readFile('userConfigg.json'); }} />
       <Button title="Read food list" onPress={() => { readFile('food.json'); }} />
       <Button title="Set user" onPress={() => { setUser({ "username": "anme", "bmi": 20, "cal": 2000 }); }} />

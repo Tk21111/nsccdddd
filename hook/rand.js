@@ -62,7 +62,7 @@ async function select(){
 
 const randFood  = async() => {
     //for now
-    await createAndWriteFile('data.json', {})
+    
 
     let dateobj = new Date();
     let dateOnly = dateobj.toISOString().split('T')[0];
