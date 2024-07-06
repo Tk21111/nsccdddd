@@ -170,4 +170,17 @@ const setEat = async (eaten) => {
         console.log('cannot write eaten value in data.json')
     }
 }
+
+// date format = "2024-07-06" or automatic insert today
+const cheeseDay = async (date) => {
+    const data = await readFile('data.json');
+    let dateobj = new Date();
+    let dateOnly = dateobj.toISOString().split('T')[0];
+
+    if(!date){
+        data[dateOnly] = [null];
+    } else {
+        data[date] = [null];
+    }
+}
 export {randFood , rerand , setEx , setEat};
