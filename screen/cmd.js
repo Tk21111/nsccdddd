@@ -68,7 +68,7 @@ const Cmd = () => {
       <Button title="Auto run generate menu" onPress={() => { checkDate() }} />
       <Button title="Read user" onPress={() => { readFile('userConfigg.json'); }} />
       <Button title="Read food list" onPress={() => { readFile('food.json'); }} />
-      <Button title="Set user" onPress={() => { setUser({ "username": "anme", "bmi": 20, "cal": 2000 }); }} />
+      <Button title="Set user" onPress={() => { setUser({ "username": "anme", "bmi": 20, "cal": 2000 , "strict" : 1}); }} />
       <Button title="Filter list" onPress={() => { foodListFilter('1.asdfsgd'); }} />
       <Button title="Delete JSON File" onPress={() => { deleteFile('data.json'); }} />
       <Text>Check console for logs</Text>

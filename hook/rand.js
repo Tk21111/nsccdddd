@@ -10,7 +10,7 @@ async function select(){
     console.log('food list');
     console.log(foodList);
     */
-    const User = await readFile('userConfig.json');
+    const User = await readFile('userConfigg.json');
 
     /*
     console.log('User');
@@ -28,10 +28,13 @@ async function select(){
 
     if (data[dateOnly]){
         for (let n of data[dateOnly]){
-            cal -= (n.cal /2);
-        }
-        if (User.excercise){
-            cal += User.excercise
+            if (n.cal){
+                cal -= (n.cal /2);
+            } else if (n.excercise){
+                cal += n.excercise;
+            } else if (n.eaten){
+                cal -= n.eaten;
+            }
         }
     };
 
@@ -55,9 +58,22 @@ async function select(){
     
 
     //random food 
-    let food = foods[Math.floor(Math.random()*foods.length)]
+    
+    for (let i = 0 ; i<=User.strict ; i++ ){
+        let food = foods[Math.floor(Math.random()*foods.length)]
 
-    return food
+        console.log(i)
+
+        if(User.strict === 1){
+            return food
+        } else if (food.healthy){
+            return food
+        } else if (User.strict === i){
+            return food
+        }
+    }
+
+    
 }
 
 const randFood  = async() => {
@@ -115,6 +131,7 @@ const randFood  = async() => {
     }
 };
 
+//in main rand func have a check point sooooo and this also can set what meal want to rerand
 const rerand = async (pos) => {
     const data = await readFile('data.json');
     let dateobj = new Date();
@@ -126,4 +143,31 @@ const rerand = async (pos) => {
 
     await createAndWriteFile('data.json' , data)
 }
-export {randFood , rerand};
+
+//set cal that already burn 
+const setEx = async (excercise) => {
+    const data = await readFile('data.json');
+    let dateobj = new Date();
+    let dateOnly = dateobj.toISOString().split('T')[0];
+
+    try{
+        data[dateOnly].push({"excercise" : excercise})
+    } catch {
+        console.log('cannot write excercise value in data.json')
+    }
+
+}
+
+//set value for already cal that eaten
+const setEat = async (eaten) => {
+    const data = await readFile('data.json');
+    let dateobj = new Date();
+    let dateOnly = dateobj.toISOString().split('T')[0];
+
+    try{
+        data[dateOnly].push({"eaten" : eaten})
+    } catch {
+        console.log('cannot write eaten value in data.json')
+    }
+}
+export {randFood , rerand , setEx , setEat};

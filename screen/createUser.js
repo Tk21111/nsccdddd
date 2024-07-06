@@ -40,7 +40,7 @@ const CreateUser = () => {
                 value={bmi}
             />
 
-            <Button title="Set user" onPress={() => {setUser({"username" : username , "bmi" : bmi , "cal" : 2000 }); navigation.navigate("Home"); }} />
+            <Button title="Set user" onPress={() => {setUser({"username" : username , "bmi" : bmi , "cal" : 2000 , "strict" : 2}); navigation.navigate("Home"); }} />
         </SafeAreaView>
 
         
