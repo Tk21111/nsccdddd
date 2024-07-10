@@ -123,6 +123,7 @@ const randFood  = async() => {
         //set food list 
         let dataDate = data[dateOnly];
         try{
+            //randomize food 
             let food = await select();
 
             if (dataDate){
@@ -191,4 +192,4 @@ const cheeseDay = async (date) => {
         data[date] = [null];
     }
 }
-export {randFood , rerand , setEx , setEat};
+export {randFood , rerand , setEx , setEat , cheeseDay};

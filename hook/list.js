@@ -45,6 +45,38 @@ const foodListFilter = async(data) => {
     }
     
 
-}
+};
 
-export {foodListUpdate , foodListFilter};
+const updateLike  = async(name) => {
+    let prv = await readFile('food.json');
+   
+    for (let i of Object.keys(prv)){
+        //i = list_500
+        for (let l of prv[i]){
+            console.log(l)
+            if(l.name === name){
+                l.like = true;
+                console.log('change like');
+                await createAndWriteFile('food.json' , prv);
+            };
+        };
+    };
+};
+const updateUnLike  = async(name) => {
+    let prv = await readFile('food.json');
+   
+    for (let i of Object.keys(prv)){
+        //i = list_500
+        for (let l of prv[i]){
+            if(l.name === name){
+                l.like = false;
+                console.log('change like');
+                await createAndWriteFile('food.json' , prv);
+            };
+        };
+    };
+};
+
+
+
+export {foodListUpdate , foodListFilter , updateLike , updateUnLike };

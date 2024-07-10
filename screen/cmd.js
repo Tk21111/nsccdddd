@@ -4,7 +4,7 @@ import { createAndWriteFile, readFile, deleteFile, updateFile } from './../fileM
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { randFood, rerand } from './../hook/rand';
 import { setUser, updateUser } from './../hook/user';
-import { foodListFilter, foodListUpdate } from './../hook/list';
+import { foodListFilter, foodListUpdate , updateLike , updateUnLike } from './../hook/list';
 
 const Cmd = () => {
   const navigation = useNavigation();
@@ -67,6 +67,8 @@ const Cmd = () => {
       <Button title="Read JSON File" onPress={() => { readFile('data.json'); }} />
       <Button title="Auto run generate menu" onPress={() => { checkDate() }} />
       <Button title="Read user" onPress={() => { readFile('userConfigg.json'); }} />
+      <Button title="update unlike" onPress={() => { updateUnLike('sadij'); }} />
+      <Button title="update like" onPress={() => { updateLike('sadij'); }} />
       <Button title="Read food list" onPress={() => { readFile('food.json'); }} />
       <Button title="Set user" onPress={() => { setUser({ "username": "anme", "bmi": 20, "cal": 2000 , "strict" : 1}); }} />
       <Button title="Filter list" onPress={() => { foodListFilter('1.asdfsgd'); }} />
