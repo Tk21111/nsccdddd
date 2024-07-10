@@ -1,4 +1,7 @@
 import { createAndWriteFile , readFile , updateFile , deleteFile } from "../fileManagement";
+import {FuncdateOnly} from "../data/dateOnly";
+
+
 
 async function select(){
     //get all fix value
@@ -21,8 +24,10 @@ async function select(){
     //can be modify with logic
     let cal = User['cal'] /2;
     let foods;
-    let dateobj = new Date();
-    let dateOnly = dateobj.toISOString().split('T')[0];
+    
+    let dateOnly = FuncdateOnly();
+    
+    
 
     const data = await readFile('data.json');
 
@@ -88,9 +93,7 @@ const randFood  = async() => {
     //for now
     
 
-    let dateobj = new Date();
-    let dateOnly = dateobj.toISOString().split('T')[0];
-
+    let dateOnly = FuncdateOnly()
     const dataFist = await readFile('data.json');
 
     let time;
@@ -112,8 +115,7 @@ const randFood  = async() => {
     
     for (let i = 0; i < time; i++){
                 
-        let dateobj = new Date();
-        let dateOnly = dateobj.toISOString().split('T')[0];
+        let dateOnly = FuncdateOnly();
             
         
 
@@ -122,6 +124,7 @@ const randFood  = async() => {
 
         //set food list 
         let dataDate = data[dateOnly];
+        console.log(dataDate)
         try{
             //randomize food 
             let food = await select();
@@ -143,9 +146,7 @@ const randFood  = async() => {
 //in main rand func have a check point sooooo and this also can set what meal want to rerand
 const rerand = async (pos) => {
     const data = await readFile('data.json');
-    let dateobj = new Date();
-    let dateOnly = dateobj.toISOString().split('T')[0];
-
+    let dateOnly = FuncdateOnly()
     const select = await select();
     
     data[dateOnly][pos] = select
@@ -156,9 +157,7 @@ const rerand = async (pos) => {
 //set cal that already burn 
 const setEx = async (excercise) => {
     const data = await readFile('data.json');
-    let dateobj = new Date();
-    let dateOnly = dateobj.toISOString().split('T')[0];
-
+    let dateOnly = FuncdateOnly()
     try{
         data[dateOnly].push({"excercise" : excercise})
     } catch {
@@ -170,9 +169,7 @@ const setEx = async (excercise) => {
 //set value for already cal that eaten
 const setEat = async (eaten) => {
     const data = await readFile('data.json');
-    let dateobj = new Date();
-    let dateOnly = dateobj.toISOString().split('T')[0];
-
+    let dateOnly = FuncdateOnly()
     try{
         data[dateOnly].push({"eaten" : eaten})
     } catch {
@@ -183,9 +180,7 @@ const setEat = async (eaten) => {
 // date format = "2024-07-06" or automatic insert today
 const cheeseDay = async (date) => {
     const data = await readFile('data.json');
-    let dateobj = new Date();
-    let dateOnly = dateobj.toISOString().split('T')[0];
-
+    let dateOnly = FuncdateOnly()
     if(!date){
         data[dateOnly] = [null];
     } else {
