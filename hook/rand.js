@@ -50,7 +50,7 @@ async function select(){
         foods = foodList['list_1000']
     } else if (cal >=0  && foodList.list_500.length != 0){
         foods = foodList['list_500']
-    }
+    };
 
     if (User.allegic){
         foods = foods.filter(food => !User.allegic.some(allergicItem => food.includes(allergicItem)));
@@ -60,13 +60,21 @@ async function select(){
     //random food 
     
     for (let i = 0 ; i<=User.strict ; i++ ){
-        let food = foods[Math.floor(Math.random()*foods.length)]
+        let food = foods[Math.floor(Math.random()*foods.length)];
 
-        console.log(i)
-
-        if(User.strict === 1){
+        if ( User.strict <= 3 ){
+            if (food.like){
+                return food
+            }
+        } else if (food.healthy && User.strict <=7 ){
+            let like = Math.random() >= 0.5 ;
+            if(like){
+                if (food.like){
+                    return food
+                }
+            }
             return food
-        } else if (food.healthy){
+        } else if (User.strict > 7 && food.healthy){
             return food
         } else if (User.strict === i){
             return food
