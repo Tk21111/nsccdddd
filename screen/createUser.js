@@ -3,6 +3,7 @@ import { View, Button, Text } from 'react-native';
 import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import { createAndWriteFile, readFile, deleteFile, updateFile } from './../fileManagement';
 import { randFood , rerand } from './../hook/rand';
 import {setUser , updateUser} from './../hook/user';
 import { foodListFilter , foodListUpdate } from './../hook/list';
@@ -22,6 +23,10 @@ const CreateUser = () => {
           padding: 10,
         },
       });
+    
+    if (readFile('userConfigg.json')){
+      navigation.navigate("Home");
+    };
     
     const onChangeUsername = (e) => setUsername(e);
     const onChangeBmi = (e) => setBmi(e);
