@@ -74,6 +74,7 @@ const Cmd = () => {
       <Button title="update list" onPress={() => { foodListUpdate({"name" : "asd" , "cal" : 200 , "howto" : "howto"}); }} />
       <Button title="Filter list" onPress={() => { foodListFilter('1.asdfsgd'); }} />
       <Button title="Delete JSON File" onPress={() => { deleteFile('data.json'); }} />
+      <Button title="Home Run" onPress={() => {navigation.navigate('Home')}} />
       <Text>Check console for logs</Text>
     </View>
   );

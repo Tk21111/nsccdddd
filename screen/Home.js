@@ -8,18 +8,18 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.notificationButton}>
+        <TouchableOpacity style={styles.notificationButton} onPress={() => navigation.navigate('Cmd')}>
           <Text style={styles.notificationText}>🔔</Text>
         </TouchableOpacity>
         <Image 
-          source={{uri: 'https://path-to-your-image.png'}} 
+          source={require('../assets/Screenshot 2024-07-14 141018.png')} 
           style={styles.carrotImage} 
         />
         <TouchableOpacity style={styles.settingsButton}>
           <Text style={styles.settingsText}>⚙️</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.calButton}>
+      <TouchableOpacity style={styles.calButton} onPress={() => navigation.navigate('Calory')}>
         <Text style={styles.calText}>... Cal</Text>
       </TouchableOpacity>
       <View style={styles.pieChart}>
@@ -32,15 +32,17 @@ const Home = () => {
         style={styles.centerImage} 
       />
       <Text style={styles.timerText}>07:59</Text>
-      <TouchableOpacity style={styles.howToMakeButton}>
-        <Text style={styles.howToMakeText}>How To Make</Text>
-      </TouchableOpacity>
+      <View style={styles.bottomRow}>
+        <TouchableOpacity style={styles.howToMakeButton}>
+          <Text style={styles.howToMakeText}>How To Make</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuButton} onPress={() => {navigation.navigate('Incal')}}>
+          <Text style={styles.menuText}>emotional damage</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.bottomRow}>
         <TouchableOpacity style={styles.listButton} onPress={() => {navigation.navigate('List')}}>
           <Text style={styles.listText}>LIST</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuButton}>
-          <Text style={styles.menuText}>MENU</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.calendarButton}>
           <Text style={styles.calendarText}>CALENDAR</Text>

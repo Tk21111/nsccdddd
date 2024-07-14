@@ -156,10 +156,12 @@ const rerand = async (pos) => {
 
 //set cal that already burn 
 const setEx = async (excercise) => {
-    const data = await readFile('data.json');
+    let data = await readFile('data.json');
     let dateOnly = FuncdateOnly()
     try{
         data[dateOnly].push({"excercise" : excercise})
+        
+        await createAndWriteFile('data.json',data);
     } catch {
         console.log('cannot write excercise value in data.json')
     }
@@ -168,10 +170,12 @@ const setEx = async (excercise) => {
 
 //set value for already cal that eaten
 const setEat = async (eaten) => {
-    const data = await readFile('data.json');
+    let data = await readFile('data.json');
     let dateOnly = FuncdateOnly()
     try{
         data[dateOnly].push({"eaten" : eaten})
+        
+        await createAndWriteFile('data.json',data);
     } catch {
         console.log('cannot write eaten value in data.json')
     }

@@ -7,6 +7,7 @@ import { updateLike , updateUnLike } from '../hook/list';
 const List = () => {
   const navigation = useNavigation();
   const [items, setItems] = useState([]);
+  const [get , setGet] = useState();
 
   useEffect(() => {
     const getList = async () => {
@@ -19,13 +20,16 @@ const List = () => {
           tempItems = tempItems.concat(list[l]);
         }
         setItems(tempItems);
+        setGet(true)
       } catch (error) {
         console.error("Error reading the list:", error);
       }
     };
-
-    getList();
-  }, []);
+    if(!get){
+      getList();
+    }
+    
+  }, [items , get]);
 
   return (
     <View style={styles.container}>
@@ -46,8 +50,8 @@ const List = () => {
 
 
             </View>
-            <Text onPress={() => updateLike(item.name) }> 👍 </Text>
-            <Text onPress={() => updateUnLike(item.name) }> 👎 </Text>
+            <Text onPress={() => {updateLike(item.name); setGet(false);}}> 👍 </Text>
+            <Text onPress={() => {updateUnLike(item.name); setGet(false);}}> 👎 </Text>
           </View>
         ))}
       </ScrollView>
