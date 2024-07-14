@@ -12,7 +12,8 @@ const foodListUpdate = async (data) => {
     } else if (data.cal >=0){
         prv.list_500.push(data)
     }
-
+    console.log(data)
+    console.log(prv)
     await createAndWriteFile('food.json' , prv)
 }
 
@@ -53,7 +54,6 @@ const updateLike  = async(name) => {
     for (let i of Object.keys(prv)){
         //i = list_500
         for (let l of prv[i]){
-            console.log(l)
             if(l.name === name){
                 l.like = true;
                 console.log('change like');
