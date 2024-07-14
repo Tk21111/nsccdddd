@@ -2,7 +2,7 @@ import { createAndWriteFile , readFile , updateFile , deleteFile } from "../file
 
 const foodListUpdate = async (data) => {
     let prv = await readFile('food.json');
-
+    console.log(prv)
     if (data.cal >= 2000){
         prv.list_2000.push(data)
     } else if (data.cal >=1500){
@@ -12,7 +12,7 @@ const foodListUpdate = async (data) => {
     } else if (data.cal >=0){
         prv.list_500.push(data)
     }
-    console.log(data)
+    console.log('hallo')
     console.log(prv)
     await createAndWriteFile('food.json' , prv)
 }

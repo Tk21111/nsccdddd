@@ -5,15 +5,14 @@ import { useNavigation } from '@react-navigation/native';
 
 const ListUpdate = () => {
   const [name, setName] = useState('');
-  const [calories, setCalories] = useState('');
+  const [calories, setCalories] = useState();
   const [instructions, setInstructions] = useState('');
-  const [score, setScore] = useState(0);
 
   const navigation = useNavigation();
 
-  const onSave = () => {
+  const onSave = async () => {
     if (name && calories && instructions){
-        foodListUpdate({"name" : name , "cal" : calories , "howto" : instructions});
+        await foodListUpdate({"name" : name , "cal" : calories , "howto" : instructions});
         navigation.navigate('Home');
     }
     

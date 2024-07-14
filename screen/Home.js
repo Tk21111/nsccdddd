@@ -1,9 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+
+import { readFile } from '../fileManagement';
+import { randFood } from '../hook/rand';
 
 const Home = () => {
   const navigation = useNavigation();
+  const [userConfig, setUserConfig] = useState(null);
+
+  const fetchUserConfig = async () => {
+    try {
+      const config = await readFile('userConfigg.json'); // Assuming readFile returns a promise
+      if (config && config.username) {
+        setUserConfig(config);
+      } else {
+        navigation.navigate('Createuser');
+      }
+    } catch {
+      navigation.navigate('Createuser');
+    }
+  };
+
+  const checkDate = async () => {
+    const dateObj = new Date();
+    const dateOnly = dateObj.toISOString().split('T')[0];
+
+    try {
+      const data = await readFile('data.json');
+      if (!data[dateOnly]) {
+        await randFood();
+        console.log('rerand');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Initial check when component mounts
+  useEffect(() => {
+    fetchUserConfig();
+    checkDate();
+  }, []);
+
+  // Re-check userConfig whenever the screen comes into focus
 
   return (
     <View style={styles.container}>
@@ -15,7 +55,7 @@ const Home = () => {
           source={require('../assets/Screenshot 2024-07-14 141018.png')} 
           style={styles.carrotImage} 
         />
-        <TouchableOpacity style={styles.settingsButton}>
+        <TouchableOpacity style={styles.settingsButton} onPress={() => navigation.navigate('Settings')}>
           <Text style={styles.settingsText}>⚙️</Text>
         </TouchableOpacity>
       </View>
@@ -28,27 +68,27 @@ const Home = () => {
         <Text style={styles.pieText}>L</Text>
       </View>
       <Image 
-        source={{uri: 'https://path-to-your-image.png'}} 
+        source={{ uri: 'https://path-to-your-image.png' }} 
         style={styles.centerImage} 
       />
       <Text style={styles.timerText}>07:59</Text>
       <View style={styles.bottomRow}>
-        <TouchableOpacity style={styles.howToMakeButton}>
+        <TouchableOpacity style={styles.howToMakeButton} onPress={() => navigation.navigate('HowToMake')}>
           <Text style={styles.howToMakeText}>How To Make</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuButton} onPress={() => {navigation.navigate('Incal')}}>
+        <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Incal')}>
           <Text style={styles.menuText}>emotional damage</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.bottomRow}>
-        <TouchableOpacity style={styles.listButton} onPress={() => {navigation.navigate('List')}}>
+        <TouchableOpacity style={styles.listButton} onPress={() => navigation.navigate('List')}>
           <Text style={styles.listText}>LIST</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.calendarButton}>
+        <TouchableOpacity style={styles.calendarButton} onPress={() => navigation.navigate('Calendar')}>
           <Text style={styles.calendarText}>CALENDAR</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.randomButton}>
+      <TouchableOpacity style={styles.randomButton} onPress={() => navigation.navigate('Random')}>
         <Text style={styles.randomText}>RANDOM</Text>
       </TouchableOpacity>
     </View>
