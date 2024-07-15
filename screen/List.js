@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput , ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { readFile } from '../fileManagement';
-import { updateLike , updateUnLike } from '../hook/list';
+import { updateLike, updateUnLike } from '../hook/list';
+
 const List = () => {
   const navigation = useNavigation();
   const [items, setItems] = useState([]);
-  const [get , setGet] = useState();
+  const [get, setGet] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     const getList = async () => {
@@ -20,103 +22,135 @@ const List = () => {
           tempItems = tempItems.concat(list[l]);
         }
         setItems(tempItems);
-        setGet(true)
+        setGet(true);
       } catch (error) {
-        console.error("Error reading the list:", error);
+        console.error('Error reading the list:', error);
       }
     };
-    if(!get){
+    if (!get) {
       getList();
     }
-    
-  }, [items , get]);
+  }, [items, get]);
+
+  const filteredItems = items.filter(item =>
+    item.name.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   return (
+    <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("Home")}>
-          <Text style={styles.backButtonText}>{'<'}</Text>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
+          <Image source={require('../assets/back.png')} style={styles.backIcon} />
         </TouchableOpacity>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search"
+          value={searchText}
+          onChangeText={setSearchText}
+        />
       </View>
-      <ScrollView style={styles.itemList}>
-        {items.map((item, index) => (
+      <ScrollView contentContainerStyle={styles.itemList}>
+        {filteredItems.map((item, index) => (
           <View key={index} style={styles.item}>
             <Image source={require('../assets/Screenshot 2024-07-14 141018.png')} style={styles.itemImage} />
-            <View style={styles.itemDetails} onTouchEndCapture={() => navigation.navigate('List:note', { paramName: item.name })}>
+            <TouchableOpacity style={styles.itemDetails} onPress={() => navigation.navigate('List:note', { paramName: item.name })}>
               <Text style={styles.itemName}>{item.name}</Text>
-              <Text style={styles.itemCalories}>แคลอรี่ : {item.cal}</Text>
-              <Text style={styles.itemDescription}>{item.ingredent}</Text>
+              <Text style={styles.itemCalories}>CAL : {item.cal}</Text>
               <Text>{item.like ? '👍' : '👎'}</Text>
-
-
-            </View>
-            <Text onPress={() => {updateLike(item.name); setGet(false);}}> 👍 </Text>
-            <Text onPress={() => {updateUnLike(item.name); setGet(false);}}> 👎 </Text>
+            </TouchableOpacity>
+            {/*<Text onPress={() => { updateLike(item.name); setGet(false); }}> 👍 </Text>*/}
+            {/*<Text onPress={() => { updateUnLike(item.name); setGet(false); }}> 👎 </Text>*/}
           </View>
         ))}
       </ScrollView>
       <TouchableOpacity style={styles.saveButton} onPress={() => navigation.navigate('ListUpdate')}>
-        <Text style={styles.saveButtonText}>Add food in list</Text>
+        <Text style={styles.saveButtonText}>+</Text>
       </TouchableOpacity>
     </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#16645F',
     alignItems: 'center',
-    justifyContent: 'center',
     padding: 20,
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    alignItems: 'center',
     width: '100%',
-    padding: 10,
+    marginBottom: 20,
   },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+},
   backButton: {
     padding: 10,
   },
-  backButtonText: {
-    fontSize: 24,
+  backIcon: {
+    width: 24,
+    height: 24,
+  },
+  searchInput: {
+    flex: 1,
+    marginLeft: 10,
+    padding: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
   },
   itemList: {
-    width: '115%',
-    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
   },
   item: {
-    flexDirection: 'row',
+    paddingTop: 20,
     padding: 10,
-    backgroundColor: '#FFF5E1',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    backgroundColor: '#CAD4DB',
+    width: '45%',
+    marginTop: 10,
+    borderRadius: 25,
+    opacity: .7,
+    justifyContent: 'center', // Center content vertically
+    alignItems: 'center',     // Center content horizontally
   },
+
   itemImage: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
+    borderRadius: 25,
+    borderWidth: 2,
+    borderColor: 'black',
+    width: 110,
+    height: 100,
+    marginBottom: 10,
   },
   itemDetails: {
-    justifyContent: 'center',
+    justifyContent: 'left',
+    alignItems: 'left',
   },
   itemName: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: 'bold',
+    textAlign: 'left',
+    color: 'black'
   },
   itemCalories: {
-    fontSize: 14,
-  },
-  itemDescription: {
-    fontSize: 14,
+    fontSize: 13,
+    color: '#3E3E3E',
+    fontWeight : 'bold',
+    textAlign: 'left',
   },
   saveButton: {
     backgroundColor: '#FF6347',
-    padding: 15,
-    borderRadius: 5,
+    padding: 9,
+    borderRadius: 50,
     alignItems: 'center',
-    width: '80%',
+    height: 50,
+    width: 50,
     marginVertical: 10,
   },
   saveButtonText: {

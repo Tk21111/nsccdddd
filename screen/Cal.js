@@ -1,121 +1,171 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import React, { useState , useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ImageBackground, ScrollView, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import { setEx, setEat } from '../hook/rand';
 import { readFile } from '../fileManagement';
-import { updateLike , updateUnLike } from '../hook/list';
-import { setEx , setEat } from '../hook/rand';
-
+import { FuncdateOnly } from '../data/dateOnly';
 const Cal = () => {
-    const [cal, setCal] = useState();
-    const navigation = useNavigation();
+  const [cal, setCal] = useState();
+  const [Incal , setInCal] = useState();
+  const navigation = useNavigation();
+  const [load , setLoad] = useState(false);
 
-    const onSave = async () => {
-        if (cal) {
-            await setEx(cal);
-            navigation.navigate('Home');
-        }
+  useEffect(() => {
+    const read = async () => {
+      const dateOnly = FuncdateOnly();
+      let data = await readFile('data.json');
+    
+      setInCal(!Incal ? data[dateOnly].eaten ||  0 : Incal)
+      setCal(!cal ? data[dateOnly].exercise ||  0  : cal)
+      
+      setLoad(true)
     };
+    read();
+  }, [load])
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
-                    <Text style={styles.backButtonText}>{'<'}</Text>
-                </TouchableOpacity>
-                <View style={styles.avatarContainer}>
-                    <Text style={styles.avatarText}>🍍</Text>
-                </View>
-                <TouchableOpacity style={styles.settingsButton}>
-                    <Text style={styles.settingsButtonText}>⚙️</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.circle}>
-                <Text style={styles.circleText}>{cal} Cal Burn</Text>
-            </View>
-            <TextInput 
+  const onSave = async () => {
+    if (cal) {
+      await setEx(cal);
+      navigation.navigate('Home');
+    }
+  };
+  const onSave1 = async () => {
+    if (Incal) {
+      await setEat(Incal);
+      navigation.navigate('Home');
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Image source={require('../assets/back.png')} style={styles.backIcon} />
+        </TouchableOpacity>
+        <View style={styles.iconWrapper}>
+            <Image source={require('../assets/Screenshot 2024-07-14 141018.png')} style={styles.carrotIcon} />
+            <TouchableOpacity style={styles.settingsButton} onPress={() => navigation.navigate('Settings')}>
+                <Image source={require('../assets/setting.png')} style={styles.settingsIcon} />
+            </TouchableOpacity>
+          
+        </View>
+      </View>
+      <ScrollView>
+        <View style={styles.calorieContainer}>
+          <ImageBackground source={require('../assets/Variant3.png')} style={styles.percentageCircleBurn}>
+            <Text style={styles.percentageTextBlack}>{Incal}</Text>
+          </ImageBackground>
+          <TextInput 
+                style={styles.input} 
+                placeholder="calories" 
+                value={Incal}
+                onChangeText={setInCal}
+                keyboardType='numeric'
+            />
+          <TouchableOpacity style={styles.calButton} onPress={onSave1}>
+            <Text style={styles.calButtonText}>.... Cal</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.calorieContainer}>
+          <ImageBackground source={require('../assets/Variant4.png')} style={styles.percentageCircleBurn}>
+            <Text style={styles.percentageText}>{cal}</Text>
+          </ImageBackground>
+          <TextInput 
                 style={styles.input} 
                 placeholder="calories" 
                 value={cal}
                 onChangeText={setCal}
                 keyboardType='numeric'
             />
-            <TouchableOpacity style={styles.button} onPress={onSave}>
-                <Text style={styles.buttonText}>Save</Text>
-            </TouchableOpacity>
+          <TouchableOpacity style={styles.calButton} onPress={onSave}>
+            <Text style={styles.calButtonText}>.... Cal</Text>
+          </TouchableOpacity>
         </View>
-    );
+      </ScrollView>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#FDF5E6',
-    },
-    header: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: 60,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 20,
-        backgroundColor: '#FDF5E6',
-    },
-    backButton: {
-        padding: 10,
-    },
-    backButtonText: {
-        fontSize: 24,
-    },
-    avatarContainer: {
-        padding: 10,
-        backgroundColor: '#FDF5E6',
-        borderRadius: 20,
-    },
-    avatarText: {
-        fontSize: 24,
-    },
-    settingsButton: {
-        padding: 10,
-    },
-    settingsButtonText: {
-        fontSize: 24,
-    },
-    circle: {
-        width: 200,
-        height: 200,
-        borderRadius: 100,
-        backgroundColor: '#FFA07A',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    circleText: {
-        fontSize: 24,
-        color: '#FFFFFF',
-    },
-    input: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        borderRadius: 5,
-        marginBottom: 15,
-        paddingHorizontal: 10,
-    },
-    button: {
-        paddingVertical: 10,
-        paddingHorizontal: 40,
-        backgroundColor: '#D3D3D3',
-        borderRadius: 10,
-    },
-    buttonText: {
-        fontSize: 18,
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 10,
+    paddingTop: 20,
+    alignItems: 'center',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: 20,
+  },
+  backButton: {
+    padding: 10,
+  },
+  backIcon: {
+    width: 24,
+    height: 24,
+  },
+  iconWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  input: {
+    textAlign : 'center',
+    width: 80,
+    height: 40,
+    marginBottom: 10
+  },
+  carrotIcon: {
+    width: 40,
+    height: 40,
+    marginRight: 10,
+  },
+  settingsButton: {
+    padding: 10,
+  },
+  settingsIcon: {
+    width: 24,
+    height: 24,
+  },
+  calorieContainer: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  percentageCircleBurn: {
+    width: 200,
+    height: 200,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  percentageText: {
+    fontSize: 24,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+  },
+  percentageTextBlack: {
+    fontSize: 24,
+    color: '#000000',
+    fontWeight: 'bold',
+  },
+  calorieText: {
+    fontSize: 18,
+    color: '#000000',
+    marginBottom: 10,
+  },
+  calButton: {
+    backgroundColor: '#000000',
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 20,
+  },
+  calButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+  },
 });
 
 export default Cal;

@@ -3,7 +3,7 @@ import { createAndWriteFile , readFile , updateFile , deleteFile } from "../file
 //data need to be obj type ex.{"username" : "input username"} and so on
 const setUser = async (data) => {
     console.log(data)
-    await createAndWriteFile('data.json', {"2024-07-09": [{"cal": 1000, "healthy": true, "ingredent": "1.asdfsgd", "like": true, "name": "sadij"}, {"cal": 500, "healthy": true, "ingredent": "asdfdg", "like": true, "name": "aiykhjbmnfhn"}, {"cal": 500, "healthy": true, "ingredent": "1.asfdgsfgd", "like": true, "name": "adsfdsdfg"}]})
+    await createAndWriteFile('data.json', {})
 
     //change this before produc
     await createAndWriteFile('userConfigg.json', data);

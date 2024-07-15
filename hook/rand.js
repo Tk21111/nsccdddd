@@ -91,76 +91,70 @@ async function select(){
 
 const randFood  = async() => {
     //for now
-    
-
     let dateOnly = FuncdateOnly()
-    const dataFist = await readFile('data.json');
 
-    let time;
-    let timeprv = dataFist[dateOnly] ? dataFist[dateOnly].length : 0;
-
-    if (timeprv === 0){
-        time = 3
-        //console.log(3)
-    } else if (timeprv === 2){
-        time = 1
-        //console.log(1)
-    } else if (timeprv === 1){
-        time = 2
-        //console.log(2)
-    } else {
-        time = 0
-        //console.log(3)
-    }
+    let data = await readFile('data.json');
     
-    for (let i = 0; i < time; i++){
-                
-        let dateOnly = FuncdateOnly();
-            
+    let foodData = {"food": [] };
+    for (let i = 0; i < 3; i++){
+        //randomize food
+        let food = await select();
+
+        console.log(food)
+        //save in list wait for more to come
+        let foodDataFood = foodData.food;
+        foodDataFood.push(food);
         
-
-        //get previous food list and date
-        const data = await readFile('data.json');
-
+        /*
         //set food list 
         let dataDate = data[dateOnly];
-        console.log(dataDate)
+        
         try{
             //randomize food 
             let food = await select();
 
-            if (dataDate){
-                dataDate.push(food)
+            if (dataDate.food){
+                let datae = dataDate.food;
+                datae.push(food)
             } else {
-                dataDate = [food]
+                let datae = dataDate.food;
+                datae = [food]
             }
     
             await updateFile('data.json' , {[dateOnly] : dataDate})
         } catch {
             console.log('will change later')
         }
-       
+        */   
     }
+    console.log(foodData)
+
+    data[dateOnly] = foodData;
+
+    await createAndWriteFile('data.json', data)
 };
 
 //in main rand func have a check point sooooo and this also can set what meal want to rerand
+
+//must working 
 const rerand = async (pos) => {
     const data = await readFile('data.json');
     let dateOnly = FuncdateOnly()
     const select = await select();
     
-    data[dateOnly][pos] = select
+    data[dateOnly].food[pos] = select
 
     await createAndWriteFile('data.json' , data)
 }
 
 //set cal that already burn 
-const setEx = async (excercise) => {
+const setEx = async (d) => {
     let data = await readFile('data.json');
     let dateOnly = FuncdateOnly()
-    try{
-        data[dateOnly].push({"excercise" : excercise})
+
+    data[dateOnly].exercise = d
         
+    try{
         await createAndWriteFile('data.json',data);
     } catch {
         console.log('cannot write excercise value in data.json')
@@ -169,12 +163,13 @@ const setEx = async (excercise) => {
 }
 
 //set value for already cal that eaten
-const setEat = async (eaten) => {
+const setEat = async (d) => {
     let data = await readFile('data.json');
     let dateOnly = FuncdateOnly()
+
+    data[dateOnly].eaten = d
+
     try{
-        data[dateOnly].push({"eaten" : eaten})
-        
         await createAndWriteFile('data.json',data);
     } catch {
         console.log('cannot write eaten value in data.json')

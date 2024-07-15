@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
-
+import { StyleSheet, Text, View, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { readFile } from '../fileManagement';
 
 const List1 = () => {
@@ -41,94 +40,149 @@ const List1 = () => {
     }, [data, paramName]);
 
     return (
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('List')}>
-              <Text style={styles.backButtonText}>{'<'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.settingsButton}>
-              <Text style={styles.settingsButtonText}>{'⚙️'}</Text>
-            </TouchableOpacity>
-          </View>
-          
-          <Image 
-            source={require("../assets/Screenshot 2024-07-14 141018.png")} 
-            style={styles.image} 
-          />
-    
-          <View style={styles.form}>
-            <Text style={styles.label}>ชื่อ</Text>
-            <Text style={styles.label}>{data? data.name: "loading"}</Text>
-            <Text style={styles.label}>caloriy</Text>
-            <Text style={styles.label}>{data? data.cal : "loading"}</Text>
-            <Text style={styles.label}>วิธีการทำ</Text>
-          </View>
-        </View>
-      );
-    };
-    
-    const styles = StyleSheet.create({
-      container: {
+        <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
+            <View style={styles.container}>
+              <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                  <Image source={require('../assets/back.png')} style={styles.backIcon} />
+                </TouchableOpacity>
+              <View style={styles.iconWrapper}>
+              <Image source={require('../assets/Screenshot 2024-07-14 141018.png')} style={styles.carrotIcon} />
+              <TouchableOpacity style={styles.settingsButton} onPress={() => navigation.navigate('Settings')}>
+                  <Image source={require('../assets/setting.png')} style={styles.settingsIcon} />
+              </TouchableOpacity>
+              </View>
+            </View>
+                
+                <Image 
+                    source={require("../assets/Screenshot 2024-07-14 141018.png")} 
+                    style={styles.image} 
+                />
+                <Text style={styles.labelName}>{data ? data.name: "loading"}</Text>
+                <View style={styles.form}>
+                    <Text style={styles.label}>calories</Text>
+                    <Text style={styles.label1}>{data ? "-  " + data.cal + "\n" : "loading"}</Text>
+                    <Text style={styles.label}>วิธีทำ</Text>
+                    <Text style={styles.label1}>{data?.howto || "None"}</Text>
+                </View>
+            </View>
+        </ImageBackground>
+    );
+};
+
+const styles = StyleSheet.create({
+    backgroundImage: {
         flex: 1,
-        backgroundColor: '#FFF',
+        resizeMode: 'cover',
+    },
+    container: {
+        flex: 1,
         alignItems: 'center',
-        paddingTop: 40,
-      },
-      header: {
+        paddingTop: 20,
+    },
+    header: {
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'space-between',
         paddingHorizontal: 20,
-      },
-      backButton: {
+    },
+    backButton: {
         padding: 10,
-      },
-      backButtonText: {
+    },
+    backButtonText: {
         fontSize: 18,
-      },
-      settingsButton: {
+    },
+    settingsButton: {
         padding: 10,
-      },
-      settingsButtonText: {
+    },
+    settingsButtonText: {
         fontSize: 18,
-      },
-      image: {
-        width: 100,
-        height: 100,
+    },
+    backButton: {
+      padding: 10,
+    },
+    backIcon: {
+      width: 24,
+      height: 24,
+    },
+    iconWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    input: {
+      textAlign : 'center',
+      width: 80,
+      height: 40,
+      marginBottom: 10
+    },
+    carrotIcon: {
+      width: 40,
+      height: 40,
+      marginRight: 10,
+    },
+    settingsButton: {
+      padding: 10,
+    },
+    settingsIcon: {
+      width: 24,
+      height: 24,
+    },
+    image: {
+      borderRadius: 25,
+      borderWidth: 2,
+      borderColor: 'black',
+        width: 200,
+        height: 200,
         marginVertical: 20,
-      },
-      form: {
-        width: '80%',
-      },
-      label: {
-        fontSize: 16,
+    },
+    form: {
+        width: '90%',
+        alignItems: "left"
+    },
+    labelName: {
+        fontSize: 24,
+        fontWeight : '600',
+        alignItems : 'center',
+        color : '#FF0000',
         marginBottom: 5,
-      },
-      input: {
+    },
+    label: {
+        fontSize: 18,
+        fontWeight : '500',
+        alignItems : 'center',
+        marginBottom: 5,
+    },
+    label1: {
+        fontSize: 16,
+        alignItems : 'center',
+        color : '#6A6A6A',
+        marginBottom: 5,
+    },
+    input: {
         height: 40,
         borderColor: 'gray',
         borderWidth: 1,
         borderRadius: 5,
         marginBottom: 15,
         paddingHorizontal: 10,
-      },
-      textArea: {
+    },
+    textArea: {
         height: 100,
-      },
-      saveButton: {
+    },
+    saveButton: {
         backgroundColor: '#000',
         padding: 15,
         borderRadius: 5,
         alignItems: 'center',
-      },
-      saveButtonText: {
+    },
+    saveButtonText: {
         color: '#fff',
         fontSize: 16,
-      },
-      scoreText: {
+    },
+    scoreText: {
         marginTop: 20,
         fontSize: 18,
-      },
-    });
+    },
+});
 
 export default List1;
