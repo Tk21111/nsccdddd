@@ -11,6 +11,8 @@ const List = () => {
   const [get, setGet] = useState(false);
   const [searchText, setSearchText] = useState('');
 
+  const color = ['#CEC2FF','#F89F9F','#CAD4DB','#F8DF9F','#FFE459','#B1F89F']
+
   useEffect(() => {
     const getList = async () => {
       try {
@@ -52,7 +54,7 @@ const List = () => {
       </View>
       <ScrollView contentContainerStyle={styles.itemList}>
         {filteredItems.map((item, index) => (
-          <View key={index} style={styles.item}>
+          <View key={index} style={[styles.item, {backgroundColor : color[index]}]}>
             <Image source={require('../assets/Screenshot 2024-07-14 141018.png')} style={styles.itemImage} />
             <TouchableOpacity style={styles.itemDetails} onPress={() => navigation.navigate('List:note', { paramName: item.name })}>
               <Text style={styles.itemName}>{item.name}</Text>
@@ -109,10 +111,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   item: {
-    paddingTop: 20,
-    padding: 10,
+    paddingTop: 10,
+    padding: 4,
     backgroundColor: '#CAD4DB',
     width: '45%',
+    height: '40%',
     marginTop: 10,
     borderRadius: 25,
     opacity: .7,
@@ -124,8 +127,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderWidth: 2,
     borderColor: 'black',
-    width: 110,
-    height: 100,
+    width: '90%',
+    height: 115,
     marginBottom: 10,
   },
   itemDetails: {
