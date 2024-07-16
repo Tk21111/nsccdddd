@@ -18,6 +18,7 @@ import Start from './screen/Start';
 import Username from './screen/username';
 import Profile from './screen/Profile';
 import Data from './screen/Data';
+import Data1 from './screen/Data1';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,7 @@ const App = () => {
         <Stack.Screen name="Username" component={Username}/>
         <Stack.Screen name="Profile" component={Profile}/>
         <Stack.Screen name="Data" component={Data}/>
+        <Stack.Screen name="Data1" component={Data1}/>
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="List" component={List}/>
         <Stack.Screen name="ListUpdate" component={ListUpdate} />

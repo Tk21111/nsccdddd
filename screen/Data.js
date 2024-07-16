@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import RNPickerSelect from 'react-native-picker-select';
 
+import { updateUser } from '../hook/user';
+import { foodListFilter } from '../hook/list';
 const UserForm = () => {
   const navigation = useNavigation();
-
-  const [Age, setAge] = useState()
-  const [Religion, setReligion] = useState()
-  const [Height, setHeight] = useState()
-  const [Weight, setWeight] = useState()
+  const [age, setAge] = useState('');
+  const [religion, setReligion] = useState();
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
 
   return (
     <View style={styles.container}>
@@ -19,12 +21,54 @@ const UserForm = () => {
         <Image source={require('../assets/pr/donut-pr.png')} style={styles.image} />
       </View>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.input} value={Age} onChange={setAge} keyboardType={'numeric'} placeholder="Age" />
-        <TextInput style={styles.input} value={Religion} onChange={setReligion} placeholder="Religion" />
-        <TextInput style={styles.input} value={Height} onChange={setHeight} keyboardType={'numeric'}  placeholder="Height" />
-        <TextInput style={styles.input} value={Weight} onChange={setWeight} keyboardType={'numeric'} placeholder="Weight" />
+        <TextInput
+          style={styles.input}
+          value={age}
+          onChangeText={setAge}
+          placeholder="Age"
+          keyboardType="numeric"
+        />
+        <RNPickerSelect
+          onValueChange={(value) => setReligion(value)}
+          items={[
+            { label: 'Christianity', value: 'Christianity' },
+            { label: 'Islam', value: 'Islam' },
+            { label: 'Hinduism', value: 'Hinduism' },
+            { label: 'Buddhism', value: 'Buddhism' },
+            { label: 'Other', value: 'Other' },
+          ]}
+          style={{
+            inputIOS: styles.picker,
+            inputAndroid: styles.picker,
+          }}
+          placeholder={{
+            label: 'Religion',
+            value: null,
+          }}
+        />
+        <TextInput
+          style={styles.input}
+          value={height}
+          onChangeText={setHeight}
+          placeholder="Height (m)"
+          keyboardType="numeric"
+        />
+        <TextInput
+          style={styles.input}
+          value={weight}
+          onChangeText={setWeight}
+          placeholder="Weight (Kg)"
+          keyboardType="numeric"
+        />
       </View>
-      <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('NextScreen')}>
+      <TouchableOpacity style={styles.nextButton} onPress={() => {
+    if (age && religion && height && weight) {
+      updateUser({ age: age, religion: religion, bmi: weight / (height ** 2) });
+      navigation.navigate('Data1');
+    } else {
+      console.log('Please fill all fields');
+    }
+  }}>
         <Text style={styles.nextButtonText}>NEXT</Text>
       </TouchableOpacity>
     </View>
@@ -41,7 +85,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 50,
+    top: 10,
     left: 20,
     padding: 10,
   },
@@ -65,9 +109,20 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 20,
-    marginVertical: 10,
+    marginVertical: 20,
     paddingHorizontal: 10,
     backgroundColor: '#F0F0F0',
+  },
+  picker: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 20,
+    marginVertical: 10,
+    paddingHorizontal: 10,
+    marginBottom : 10 ,
+    backgroundColor: '#F0F0F0',
+    justifyContent: 'center',
   },
   nextButton: {
     backgroundColor: '#000',
