@@ -1,98 +1,121 @@
-import React, { useState , useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ImageBackground, ScrollView, TextInput, Button } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { updateUser } from '../hook/user';
 
 const Profile = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
+  const [itemPr, setItem] = useState(require('../assets/pr/pizza-pr.png'));
 
-    const [userName , setUserName] = useState();
-    /*
-    if (readFile('userConfigg.json')){
-        navigation.navigate("Home");
-      };
-    */
-    return(
-        <ImageBackground style={styles.backgroundImage}source={require('../assets/username-page.png')}>
-            <View>
-                <Text style={styles.label}>{"Username"}</Text>
-                <TextInput 
-                style={styles.input} 
-                placeholder="    username" 
-                value={userName}
-                onChangeText={setUserName}
-            />
-                <TouchableOpacity style={styles.Button} onPress={() => {updateUser({"ProfilePic": userName}); navigation.navigate('Data')}}>
-                    <Text style={styles.calButtonText}> NEXT</Text>
+  const items = [
+    { name: 'Pizza', image: require('../assets/pr/pizza-pr.png') },
+    { name: 'Donut', image: require('../assets/pr/donut-pr.png') },
+    { name: 'Fries', image: require('../assets/pr/fries-pr.png') },
+    { name: 'Lollipop', image: require('../assets/pr/lolipop-pr.png') }
+  ];
+
+  console.log(itemPr)
+
+  return (
+    <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <Image source={itemPr} style={styles.displayedImage} />
+        <Text style={styles.saveButtonText}> Yours Profile</Text>
+      </View>
+      <View style={styles.container1}>
+      <ImageBackground source={require('../assets/blur.png')} style={styles.blurImg}>
+          <ScrollView contentContainerStyle={styles.itemList}>
+            {items.map((item, index) => (
+              <View key={index} style={styles.item}>
+                <TouchableOpacity style={styles.conIm} onPress={() => {setItem(item.image); updateUser({"pr" : item.image})} }>
+                  <Image source={item.image} style={styles.itemImage} />
                 </TouchableOpacity>
-            </View>
+              </View>
+            ))}
+          </ScrollView>
         </ImageBackground>
-    )
-}
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#FFFFFF',
-      paddingHorizontal: 10,
-      paddingTop: 20,
-      alignItems: 'center',
-    },
-    header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      width: '100%',
-      marginBottom: 20,
-    },
-    input: {
-        alignSelf : 'center',
-        backgroundColor: '#EAE7E3',
-        width: '70%',
-        height: 60,
-        marginBottom: 10,
-        borderRadius: 25,
-        justifyContent: 'center', // Center content vertically
-        alignItems: 'center',
-    },
-    backButton: {
-      padding: 10,
-    },
-    backgroundImage: {
-        flex: 1,
-        resizeMode: 'cover',
-    },
-    backIcon: {
-      width: 24,
-      height: 24,
-    },
-    label: {
-        marginTop: '70%',
-        marginLeft: '15%',
-        marginBottom: '3%',
-        textAlign: 'left',
-        fontSize: 15,
-        letterSpacing: .5,
-        fontWeight: 'bold'
-    },
-    label1: {
-        marginTop: 10,
-        textAlign: 'center',
-        color: '#8E8E8E',
-        fontSize: 16,
-    },
-    Button: {
-      backgroundColor: '#000000',
-      paddingVertical: 15,
-      paddingHorizontal: 30,
-      marginHorizontal: '30%',
-      marginTop: '10%',
-      borderRadius: 40,
-      alignItems : 'center'
-    },
-    calButtonText: {
-      color: '#FFFFFF',
-      fontSize: 16,
-    },
-  });
+        <View>
+          <TouchableOpacity style={styles.saveButton} onPress={() => navigation.navigate('Data')}>
+            <Text style={styles.saveButtonText}>SAVE</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ImageBackground>
+  );
+};
 
-export default Profile
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 20,
+  },
+  container1: {
+    marginVertical: '50%',
+    alignItems: 'center',
+    padding: 20,
+  },
+  conIm: {
+    marginLeft: '10%',
+    width: '100%',
+    height: '100%',
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
+  blurImg: {
+    width : '100%',
+    height: '100%'
+  },
+  displayedImage: {
+    borderRadius: 25,
+    borderWidth: 2,
+    borderColor: 'black',
+    width: '80%',
+    height: 200,
+    resizeMode: 'contain',
+    marginBottom: 20,
+  },
+  itemList: {
+    opacity: .9,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  item: {
+    paddingTop: 10,
+    padding: 4,
+    backgroundColor: 'white',
+    width: '30%',
+    height: 150,
+    marginTop: 10,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  itemImage: {
+    borderRadius: 25,
+    borderWidth: 2,
+    borderColor: 'black',
+    width: '90%',
+    height: 115,
+    marginBottom: 10,
+  },
+  saveButton: {
+    backgroundColor: 'black',
+    padding: 9,
+    borderRadius: 50,
+    alignItems: 'center',
+    height: 50,
+    width: 100,
+    marginVertical: 10,
+  },
+  saveButtonText: {
+    color: 'white',
+    fontSize: 20,
+  },
+});
+
+export default Profile;

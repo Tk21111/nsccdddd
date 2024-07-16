@@ -19,7 +19,7 @@ const Username = () => {
                 <Text style={styles.label}>{"Username"}</Text>
                 <TextInput 
                 style={styles.input} 
-                placeholder="    username" 
+                placeholder="username" 
                 value={userName}
                 onChangeText={setUserName}
             />
@@ -49,9 +49,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#EAE7E3',
         width: '70%',
         height: 60,
+        textAlign: 'center',
         marginBottom: 10,
         borderRadius: 25,
-        justifyContent: 'center', // Center content vertically
         alignItems: 'center',
     },
     backButton: {
