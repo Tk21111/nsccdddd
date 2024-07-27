@@ -28,7 +28,7 @@ const Profile = () => {
           <ScrollView contentContainerStyle={styles.itemList}>
             {items.map((item, index) => (
               <View key={index} style={styles.item}>
-                <TouchableOpacity style={styles.conIm} onPress={() => {setItem(item.image); updateUser({"pr" : item.image})} }>
+                <TouchableOpacity style={styles.conIm} onPress={() => {setItem(item.image); updateUser({"pr" : item.image});} }>
                   <Image source={item.image} style={styles.itemImage} />
                 </TouchableOpacity>
               </View>
