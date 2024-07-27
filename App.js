@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Cmd from './screen/cmd';
 import CreateUser from './screen/createUser';
-import ListUpdate from './screen/Test4';
+import ListUpdate from './screen/UpdateFoodList';
 import Home from './screen/Home';
 import List from './screen/List';
 import List1 from './screen/List1';

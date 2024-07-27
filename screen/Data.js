@@ -12,15 +12,23 @@ const UserForm = () => {
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
 
+  const a = async () => {
+    try{
+      foodListFilter(religion.value);
+      updateUser({ age: age, religion: religion, bmi: weight / (height ** 2) });
+    } catch {
+      console.log('fetch fail')
+    }
+    
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>{'<'}</Text>
-      </TouchableOpacity>
       <View style={styles.imageContainer}>
         <Image source={require('../assets/pr/donut-pr.png')} style={styles.image} />
       </View>
       <View style={styles.inputContainer}>
+        <Text style={styles.inputText}>Age</Text>
         <TextInput
           style={styles.input}
           value={age}
@@ -28,14 +36,14 @@ const UserForm = () => {
           placeholder="Age"
           keyboardType="numeric"
         />
+        <Text style={styles.inputText}>ศาสนา(รับประทาน)</Text>
         <RNPickerSelect
           onValueChange={(value) => setReligion(value)}
           items={[
-            { label: 'Christianity', value: 'Christianity' },
-            { label: 'Islam', value: 'Islam' },
-            { label: 'Hinduism', value: 'Hinduism' },
-            { label: 'Buddhism', value: 'Buddhism' },
-            { label: 'Other', value: 'Other' },
+            { label: 'คริสต์', value: ''},
+            { label: 'อิสลาม', value: 'pork' },
+            { label: 'Hinduism', value: 'beef' },
+            { label: 'พุทธ', value: '' },
           ]}
           style={{
             inputIOS: styles.picker,
@@ -46,6 +54,7 @@ const UserForm = () => {
             value: null,
           }}
         />
+        <Text style={styles.inputText}>Height</Text>        
         <TextInput
           style={styles.input}
           value={height}
@@ -53,6 +62,7 @@ const UserForm = () => {
           placeholder="Height (m)"
           keyboardType="numeric"
         />
+        <Text style={styles.inputText}>Weight</Text>       
         <TextInput
           style={styles.input}
           value={weight}
@@ -63,7 +73,8 @@ const UserForm = () => {
       </View>
       <TouchableOpacity style={styles.nextButton} onPress={() => {
     if (age && religion && height && weight) {
-      updateUser({ age: age, religion: religion, bmi: weight / (height ** 2) });
+      
+      a();
       navigation.navigate('Data1');
     } else {
       console.log('Please fill all fields');
@@ -103,6 +114,8 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: '100%',
     marginBottom: 30,
+  },inputText : {
+    alignItems: 'flex-start'
   },
   input: {
     height: 40,
@@ -120,7 +133,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginVertical: 10,
     paddingHorizontal: 10,
-    marginBottom : 10 ,
+    marginBottom : 30 ,
     backgroundColor: '#F0F0F0',
     justifyContent: 'center',
   },

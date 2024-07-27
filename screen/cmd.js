@@ -18,11 +18,7 @@ const Cmd = () => {
       config = false;
     }
 
-    if (config && config.username) {
-      setUserConfig(config);
-    } else {
-      navigation.navigate('Createuser');
-    }
+
   };
 
   const checkDate = async () => {
@@ -42,6 +38,7 @@ const Cmd = () => {
       console.log('rerand')
     };
   }
+  /*
   // Initial check when component mounts
   useEffect(() => {
     fetchUserConfig();
@@ -59,6 +56,7 @@ const Cmd = () => {
   if (!userConfig) {
     return null; // or a loading indicator if preferred
   }
+    */
 
   return (
     <View>

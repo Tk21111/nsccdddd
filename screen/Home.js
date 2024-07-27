@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-
-import { readFile } from '../fileManagement';
-import { randFood } from '../hook/rand';
+import { useNavigation } from '@react-navigation/native';
+import { readFile } from '../fileManagement';  // Ensure this path is correct
+import { randFood } from '../hook/rand';  // Ensure this path is correct
 
 const Home = () => {
   const navigation = useNavigation();
@@ -43,8 +42,6 @@ const Home = () => {
     checkDate();
   }, []);
 
-  // Re-check userConfig whenever the screen comes into focus
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -55,7 +52,7 @@ const Home = () => {
           source={require('../assets/Screenshot 2024-07-14 141018.png')} 
           style={styles.carrotImage} 
         />
-        <TouchableOpacity style={styles.settingsButton} onPress={() => navigation.navigate('Settings')}>
+        <TouchableOpacity style={styles.settingsButton} onPress={() => navigation.navigate('Username')}>
           <Text style={styles.settingsText}>⚙️</Text>
         </TouchableOpacity>
       </View>
@@ -144,6 +141,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     alignItems: 'center',
     justifyContent: 'center',
+    marginVertical: 20,
   },
   pieText: {
     fontSize: 24,
@@ -151,8 +149,6 @@ const styles = StyleSheet.create({
   centerImage: {
     width: 100,
     height: 100,
-    position: 'absolute',
-    top: 200,
   },
   timerText: {
     fontSize: 32,
@@ -171,7 +167,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
-    marginVertical: 20,
+    marginVertical: 10,
   },
   listButton: {
     backgroundColor: '#FFDDC1',

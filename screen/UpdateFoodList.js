@@ -20,12 +20,6 @@ const ListUpdate = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
-          <Text style={styles.backButtonText}>{'<'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.settingsButton}>
-          <Text style={styles.settingsButtonText}>{'⚙️'}</Text>
-        </TouchableOpacity>
       </View>
       
       <Image 

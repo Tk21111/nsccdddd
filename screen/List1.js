@@ -43,9 +43,6 @@ const List1 = () => {
         <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
             <View style={styles.container}>
               <View style={styles.header}>
-                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                  <Image source={require('../assets/back.png')} style={styles.backIcon} />
-                </TouchableOpacity>
               <View style={styles.iconWrapper}>
               <Image source={require('../assets/Screenshot 2024-07-14 141018.png')} style={styles.carrotIcon} />
               <TouchableOpacity style={styles.settingsButton} onPress={() => navigation.navigate('Settings')}>
@@ -107,6 +104,7 @@ const styles = StyleSheet.create({
     },
     iconWrapper: {
       flexDirection: 'row',
+      marginLeft: '75%',
       alignItems: 'center',
     },
     input: {

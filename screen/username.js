@@ -1,6 +1,7 @@
 import React, { useState , useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ImageBackground, ScrollView, TextInput, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Slider from '@react-native-community/slider';
 
 import { updateUser } from '../hook/user';
 
@@ -8,6 +9,8 @@ const Username = () => {
     const navigation = useNavigation();
 
     const [userName , setUserName] = useState();
+    const [value, setValue] = useState(1);
+
     /*
     if (readFile('userConfigg.json')){
         navigation.navigate("Home");
@@ -23,6 +26,18 @@ const Username = () => {
                 value={userName}
                 onChangeText={setUserName}
             />
+                <Text style={styles.label2}>How Strict r u: {value} /10</Text>
+                <Slider
+                  style={styles.slider}
+                  minimumValue={1}
+                  maximumValue={10}
+                  step={1}
+                  value={value}
+                  onValueChange={(val) => setValue(val)}
+                  minimumTrackTintColor="#1fb28a"
+                  maximumTrackTintColor="#d3d3d3"
+                  thumbTintColor="#b9e4c9"
+                />
                 <TouchableOpacity style={styles.Button} onPress={() => {updateUser({"username": userName}); navigation.navigate('Profile')}}>
                     <Text style={styles.calButtonText}> NEXT</Text>
                 </TouchableOpacity>
@@ -31,13 +46,6 @@ const Username = () => {
     )
 }
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#FFFFFF',
-      paddingHorizontal: 10,
-      paddingTop: 20,
-      alignItems: 'center',
-    },
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -74,6 +82,14 @@ const styles = StyleSheet.create({
         letterSpacing: .5,
         fontWeight: 'bold'
     },
+    label2: {
+        marginLeft: '15%',
+        marginBottom: '3%',
+        textAlign: 'left',
+        fontSize: 15,
+        letterSpacing: .5,
+        fontWeight: 'bold'
+    },
     label1: {
         marginTop: 10,
         textAlign: 'center',
@@ -92,6 +108,19 @@ const styles = StyleSheet.create({
     calButtonText: {
       color: '#FFFFFF',
       fontSize: 16,
+    },container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    text: {
+      fontSize: 20,
+      marginBottom: 20,
+    },
+    slider: {
+      width: 300,
+      height: 40,
+      alignSelf: 'center',
     },
   });
 

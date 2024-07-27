@@ -42,9 +42,6 @@ const List = () => {
     <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
-          <Image source={require('../assets/back.png')} style={styles.backIcon} />
-        </TouchableOpacity>
         <TextInput
           style={styles.searchInput}
           placeholder="Search"

@@ -22,9 +22,6 @@ const Data1 = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>{'<'}</Text>
-      </TouchableOpacity>
       <Text style={styles.title}>What type of meal do you prefer?</Text>
       {options.map((optionGroup, index) => (
         <View key={index} style={styles.optionGroup}>
