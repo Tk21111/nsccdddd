@@ -13,12 +13,12 @@ import Home from './screen/Home';
 import List from './screen/List';
 import List1 from './screen/List1';
 import Cal from './screen/Cal';
-import Incal from './screen/InCal';
 import Start from './screen/Start';
 import Username from './screen/username';
 import Profile from './screen/Profile';
 import Data from './screen/Data';
 import Data1 from './screen/Data1';
+import UserProfile from './screen/userProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,8 +38,8 @@ const App = () => {
         <Stack.Screen name="ListUpdate" component={ListUpdate} />
         <Stack.Screen name="List:note" component={List1}/>
         <Stack.Screen name="Createuser" component={CreateUser} />
+        <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="Calory" component={Cal} />
-        <Stack.Screen name="Incal" component={Incal} />
         <Stack.Screen name="Cmd" component={Cmd}/>
   
       </Stack.Navigator>

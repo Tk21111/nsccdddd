@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   item: {
     paddingTop: 10,
-    padding: 4,
+    padding: 8,
     backgroundColor: '#CAD4DB',
     width: '45%',
     height: '40%',

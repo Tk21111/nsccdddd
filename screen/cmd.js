@@ -68,7 +68,7 @@ const Cmd = () => {
       <Button title="update unlike" onPress={() => { updateUnLike('sadij'); }} />
       <Button title="update like" onPress={() => { updateLike('sadij'); }} />
       <Button title="Read food list" onPress={() => { readFile('food.json'); }} />
-      <Button title="Set user" onPress={() => { setUser({ "username": "anme", "bmi": 20, "cal": 2000 , "strict" : 1}); }} />
+      <Button title="Set user" onPress={() => { setUser({ "username": "anme", "bmi": 20, "cal": 2000 , "strict" : 1, "age" : 20}); }} />
       <Button title="update list" onPress={() => { foodListUpdate({"name" : "asd" , "cal" : 200 , "howto" : "howto"}); }} />
       <Button title="Filter list" onPress={() => { foodListFilter('1.asdfsgd'); }} />
       <Button title="Delete JSON File" onPress={() => { deleteFile('data.json'); }} />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image , ImageBackground} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -15,7 +15,7 @@ const UserForm = () => {
   const a = async () => {
     try{
       foodListFilter(religion.value);
-      updateUser({ age: age, religion: religion, bmi: weight / (height ** 2) });
+      updateUser({ age: age, religion: religion, bmi: (weight / (height ** 2)).toFixed(2) });
     } catch {
       console.log('fetch fail')
     }

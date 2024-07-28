@@ -52,7 +52,7 @@ const Home = () => {
           source={require('../assets/Screenshot 2024-07-14 141018.png')} 
           style={styles.carrotImage} 
         />
-        <TouchableOpacity style={styles.settingsButton} onPress={() => navigation.navigate('Username')}>
+        <TouchableOpacity style={styles.settingsButton} onPress={() => navigation.navigate('UserProfile')}>
           <Text style={styles.settingsText}>⚙️</Text>
         </TouchableOpacity>
       </View>
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
+    width: '50%',
     padding: 10,
   },
   notificationButton: {

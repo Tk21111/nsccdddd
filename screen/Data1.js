@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     marginVertical: 40,
   },
   optionGroup: {
+    
     marginBottom: 30,
   },
   optionGroupTitle: {
@@ -96,6 +97,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   optionsContainer: {
+    alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
