@@ -14,10 +14,11 @@ const Profile = () => {
     { name: 'Lollipop', image: require('../assets/pr/lolipop-pr.png') }
   ];
 
-
-  const handleSave =  () => {
+  const handleSave = async () => {
     try {
-      navigation.navigate('Data');
+      // Ensure the user update logic is awaited if it's async
+      await updateUser({ pr: itemPr });
+      navigation.navigate('DataInpu');
     } catch (error) {
       Alert.alert("Error", "Failed to update user profile");
       console.error(error);
@@ -39,7 +40,7 @@ const Profile = () => {
                   style={styles.conIm} 
                   onPress={() => {
                     setItem(item.image); 
-                    updateUser({ "pr": item.image }).catch(error => {
+                    updateUser({ pr: item.image }).catch(error => {
                       Alert.alert("Error", "Failed to update user profile");
                       console.error(error);
                     });

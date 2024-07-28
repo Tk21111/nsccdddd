@@ -16,7 +16,7 @@ import Cal from './screen/Cal';
 import Start from './screen/Start';
 import Username from './screen/username';
 import Profile from './screen/Profile';
-import Data from './screen/Data';
+import DataInpu from './screen/Data';
 import Data1 from './screen/Data1';
 import UserProfile from './screen/userProfile';
 
@@ -31,7 +31,7 @@ const App = () => {
         <Stack.Screen name="Start" component={Start}/>
         <Stack.Screen name="Username" component={Username}/>
         <Stack.Screen name="Profile" component={Profile}/>
-        <Stack.Screen name="Data" component={Data}/>
+        <Stack.Screen name="DataInpu" component={DataInpu}/>
         <Stack.Screen name="Data1" component={Data1}/>
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="List" component={List}/>

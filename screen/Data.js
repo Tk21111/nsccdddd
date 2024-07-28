@@ -5,7 +5,7 @@ import RNPickerSelect from 'react-native-picker-select';
 
 import { updateUser } from '../hook/user';
 import { foodListFilter } from '../hook/list';
-const UserForm = () => {
+const DataInpu = () => {
   const navigation = useNavigation();
   const [age, setAge] = useState('');
   const [religion, setReligion] = useState();
@@ -151,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserForm;
+export default DataInpu;

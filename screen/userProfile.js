@@ -65,7 +65,7 @@ const UserProfile = () => {
         </View>
       </View>
       <View style={styles.formContainer}>
-        <View style={styles.row}>
+        <View style={styles.row1}>
           <Text>Preferred Ingredients: </Text>
           <TextInput
             style={styles.input}
@@ -74,7 +74,7 @@ const UserProfile = () => {
             placeholder="Preferred Ingredients"
           />
         </View>
-        <View style={styles.row}>
+        <View style={styles.row1}>
           <Text>Ingredients to Avoid: </Text>
           <TextInput
             style={styles.input}
@@ -83,7 +83,7 @@ const UserProfile = () => {
             placeholder="Ingredients to Avoid"
           />
         </View>
-        <View style={styles.row}>
+        <View style={styles.row1}>
           <Text>Chronic Diseases: </Text>
           <TextInput
             style={styles.input}
@@ -140,6 +140,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   row: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    marginBottom: 10,
+  },
+  row1: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
