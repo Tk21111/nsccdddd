@@ -24,7 +24,7 @@ const Profile = () => {
     }
     try {
       // Ensure the user update logic is awaited if it's async
-      navigation.navigate('DataInpu');
+      navigation.navigate('Datain');
     } catch (error) {
       Alert.alert("Error", "Failed to navigate");
       console.error(error);

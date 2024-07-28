@@ -29,7 +29,7 @@ const DataInpu = () => {
         const dataIn = await readFile('userConfigg.json');
         setData(dataIn);
         if (items.find(item => item.name === dataIn.pr)) {
-          console.log(items.find(item => item.name === dataIn.pr).image);
+          console.log(items.find(item => item.name === dataIn.pr));
         } else {
           console.log('Item not found in list');
         }
@@ -58,7 +58,7 @@ const DataInpu = () => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        {data.name && items.find(item => item.name === data.pr) ? (
+        {data.pr && items.find(item => item.name === data.pr) ? (
           <Image source={items.find(item => item.name === data.pr).image} style={styles.image} />
         ) : (
           <Text>No image available</Text>

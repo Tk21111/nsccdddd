@@ -32,7 +32,7 @@ const App = () => {
         <Stack.Screen name="Start" component={Start}/>
         <Stack.Screen name="Username" component={Username}/>
         <Stack.Screen name="Profile" component={Profile}/>
-        <Stack.Screen name="DataInpu" component={DataInpu}/>
+        <Stack.Screen name="Datain" component={DataInpu}/>
         <Stack.Screen name="Data1" component={Data1}/>
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="Carlendar" component={CalendarScreen}/>

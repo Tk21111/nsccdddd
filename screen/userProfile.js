@@ -2,39 +2,48 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { useNavigation } from '@react-navigation/native';
-import { readFile } from '../fileManagement'; // Ensure this is correctly imported
+import { readFile } from '../fileManagement';
 import { foodListFilter } from '../hook/list';
 import Slider from '@react-native-community/slider';
 
 const UserProfile = () => {
   const navigation = useNavigation();
   const [age, setAge] = useState('');
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
   const [bmi, setBmi] = useState('');
   const [preferredIngredients, setPreferredIngredients] = useState('');
   const [ingredientsToAvoid, setIngredientsToAvoid] = useState('');
   const [chronicDiseases, setChronicDiseases] = useState('');
-  const [value ,setValue] = useState(item?.strict || 5);
+  const [value, setValue] = useState(5);
 
-  const [get, setGet] = useState(false);
   const [item, setItem] = useState(null);
+  const [data, setData] = useState({ name: 'Donut' });
+
+  const items = [
+    { name: 'Pizza', image: require('../assets/pr/pizza-pr.png') },
+    { name: 'Donut', image: require('../assets/pr/donut-pr.png') },
+    { name: 'Fries', image: require('../assets/pr/fries-pr.png') },
+    { name: 'Lollipop', image: require('../assets/pr/lolipop-pr.png') }
+  ];
 
   useEffect(() => {
-    const getList = async () => {
+    const fetchData = async () => {
       try {
-        const list = await readFile('userConfigg.json');
-        console.log(list)
-        setItem(list);
-        setGet(true);
+        const dataIn = await readFile('userConfigg.json');
+        setData(dataIn);
+        console.log(dataIn)
+        const matchedItem = items.find(item => item.name === dataIn.pr);
+        if (matchedItem) {
+          setItem(matchedItem);
+        } else {
+          console.log('Item not found in list');
+        }
       } catch (error) {
-        console.error('Error reading the list:', error);
+        console.error('Failed to read file', error);
       }
     };
-    if (!get) {
-      getList();
-    }
-  }, [get]);
+
+    fetchData();
+  }, []);
 
   const calculateBmi = () => {
     if (height && weight) {
@@ -46,31 +55,32 @@ const UserProfile = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image 
-          source={item.pr} 
-          style={styles.avatar} 
-        />
+        {item && item.image ? (
+          <Image source={item.image} style={styles.avatar} />
+        ) : (
+          <Text>No image available</Text>
+        )}
         <View style={styles.header1}>
           <View style={styles.headerTextContainer}>
-            <Text style={styles.username}>{item?.name || "username"}</Text>
+            <Text style={styles.username}>{data?.username || "username"}</Text>
             <View style={styles.genderIconContainer}>
               <Text>♂️</Text>
-              <TouchableOpacity onPress={() => {/* Add logic to change gender icon */}}>
+              <TouchableOpacity onPress={() => {navigation.navigate('Data')}}>
                 <Text>✏️</Text>
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.headerTextContainer}>
             <View style={styles.row}>
-              <Text>bmi: {item ? item.bmi : ''}</Text>
-              <Text>Age: {item ? item.age : ''}</Text>
+              <Text>bmi: {data.bmi || "no data"}</Text>
+              <Text>Age: {data.age || "no data"}</Text>
             </View>
           </View>
         </View>
       </View>
       <View style={styles.formContainer}>
         <View style={styles.row1}>
-        <Text>ศาสนา </Text>
+          <Text>ศาสนา </Text>
           <RNPickerSelect
             onValueChange={(value) => setReligion(value)}
             items={[
@@ -98,21 +108,22 @@ const UserProfile = () => {
             placeholder="Chronic Diseases"
           />
         </View>
-        <Text>How Strict r u: {value} /10</Text>
-                <Slider
-                  style={styles.slider}
-                  minimumValue={1}
-                  maximumValue={10}
-                  step={1}
-                  value={value}
-                  onValueChange={(val) => setValue(val)}
-                  minimumTrackTintColor="#1fb28a"
-                  maximumTrackTintColor="#d3d3d3"
-                  thumbTintColor="#b9e4c9"
-                />
+        <Text>How Strict are you: {value} /10</Text>
+        <Slider
+          style={styles.slider}
+          minimumValue={1}
+          maximumValue={10}
+          step={1}
+          value={value}
+          onValueChange={(val) => setValue(val)}
+          minimumTrackTintColor="#1fb28a"
+          maximumTrackTintColor="#d3d3d3"
+          thumbTintColor="#b9e4c9"
+        />
       </View>
       <TouchableOpacity style={styles.saveButton} onPress={() => {
         foodListFilter(ingredientsToAvoid);
+        navigation.navigate("Home");
       }}>
         <Text style={styles.saveButtonText}>SAVE</Text>
       </TouchableOpacity>
@@ -128,6 +139,7 @@ const styles = StyleSheet.create({
   },
   slider: {
     width: 300,
+    marginTop : 20,
     height: 40,
     alignSelf: 'center',
   },
@@ -140,7 +152,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingHorizontal: 10,
     marginLeft: 90,
-    marginBottom : 30 ,
+    marginBottom: 30,
     backgroundColor: '#F0F0F0',
     justifyContent: 'center',
   },
