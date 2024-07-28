@@ -14,11 +14,9 @@ const Profile = () => {
     { name: 'Lollipop', image: require('../assets/pr/lolipop-pr.png') }
   ];
 
-  console.log(itemPr);
 
   const handleSave =  () => {
     try {
-      updateUser({ "pr": itemPr });
       navigation.navigate('Data');
     } catch (error) {
       Alert.alert("Error", "Failed to update user profile");
@@ -30,7 +28,7 @@ const Profile = () => {
     <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
       <View style={styles.container}>
         <Image source={itemPr} style={styles.displayedImage} />
-        <Text style={styles.saveButtonText}>Yours Profile</Text>
+        <Text style={styles.saveButtonText}>Yours ดีไส</Text>
       </View>
       <View style={styles.container1}>
         <ImageBackground source={require('../assets/blur.png')} style={styles.blurImg}>

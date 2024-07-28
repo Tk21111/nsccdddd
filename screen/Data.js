@@ -12,7 +12,7 @@ const UserForm = () => {
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
 
-  const a = async () => {
+  const a = () => {
     try{
       foodListFilter(religion.value);
       updateUser({ age: age, religion: religion, bmi: (weight / (height ** 2)).toFixed(2) });
