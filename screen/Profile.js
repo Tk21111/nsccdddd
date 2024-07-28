@@ -16,10 +16,9 @@ const Profile = () => {
 
   console.log(itemPr);
 
-  const handleSave = async () => {
+  const handleSave =  () => {
     try {
-      // Assuming updateUser is an async function
-      await updateUser({ "pr": itemPr });
+      updateUser({ "pr": itemPr });
       navigation.navigate('Data');
     } catch (error) {
       Alert.alert("Error", "Failed to update user profile");

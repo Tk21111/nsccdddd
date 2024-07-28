@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: '#CAD4DB',
     width: '45%',
-    height: '40%',
+    height: '30%',
     marginTop: 10,
     borderRadius: 25,
     opacity: .7,
