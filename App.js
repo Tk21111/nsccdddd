@@ -19,6 +19,7 @@ import Profile from './screen/Profile';
 import DataInpu from './screen/Data';
 import Data1 from './screen/Data1';
 import UserProfile from './screen/userProfile';
+import CalendarScreen from './screen/cald';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ const App = () => {
         <Stack.Screen name="DataInpu" component={DataInpu}/>
         <Stack.Screen name="Data1" component={Data1}/>
         <Stack.Screen name="Home" component={Home}/>
+        <Stack.Screen name="Carlendar" component={CalendarScreen}/>
         <Stack.Screen name="List" component={List}/>
         <Stack.Screen name="ListUpdate" component={ListUpdate} />
         <Stack.Screen name="List:note" component={List1}/>

@@ -54,9 +54,14 @@ const List = () => {
           <View key={index} style={[styles.item, {backgroundColor : color[index]}]}>
             <Image source={require('../assets/Screenshot 2024-07-14 141018.png')} style={styles.itemImage} />
             <TouchableOpacity style={styles.itemDetails} onPress={() => navigation.navigate('List:note', { paramName: item.name })}>
-              <Text style={styles.itemName}>{item.name}</Text>
-              <Text style={styles.itemCalories}>CAL : {item.cal}</Text>
-              <Text>{item.like ? '👍' : '👎'}</Text>
+              <View style={styles.containerSub1}>
+                <Text style={styles.itemName}>{item.name}</Text>
+                <Text style={styles.itemCalories}>CAL : {item.cal}</Text>
+              </View>
+              <View style={styles.containerSub}>
+                  <Text style={styles.detail}>{item.like ? '👍' : '👎'}</Text>
+                <Text style={styles.detail}>detail</Text>
+              </View>
             </TouchableOpacity>
             {/*<Text onPress={() => { updateLike(item.name); setGet(false); }}> 👍 </Text>*/}
             {/*<Text onPress={() => { updateUnLike(item.name); setGet(false); }}> 👎 </Text>*/}
@@ -86,7 +91,28 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover',
-},
+  },
+  containerSub : {
+    alignContent: 'space-around',
+    flexDirection: 'row'
+  },
+  containerSub1 : {
+    marginLeft: '15%',
+    marginBottom: '3%',
+    alignContent: 'space-around',
+    flexDirection: 'column'
+  },
+  detail: {
+    borderRadius: 25,
+    borderWidth: 2,
+    backgroundColor: 'white',
+    borderColor: 'black',
+    paddingVertical: 2,
+    paddingHorizontal: 5,
+    marginHorizontal: 16,
+    fontSize: 13,
+    alignItems: 'flex-end'
+  },
   backButton: {
     padding: 10,
   },
@@ -112,7 +138,7 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: '#CAD4DB',
     width: '45%',
-    height: '30%',
+    height: '33%',
     marginTop: 10,
     borderRadius: 25,
     opacity: .7,

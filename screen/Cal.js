@@ -1,5 +1,5 @@
 import React, { useState , useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ImageBackground, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ImageBackground, ScrollView, TextInput , Alert} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { setEx, setEat } from '../hook/rand';

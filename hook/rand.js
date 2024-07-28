@@ -181,9 +181,15 @@ const cheeseDay = async (date) => {
     const data = await readFile('data.json');
     let dateOnly = FuncdateOnly()
     if(!date){
-        data[dateOnly] = [null];
+        data[dateOnly] = {"food" : [null]};
     } else {
-        data[date] = [null];
+        data[date] = {"food" : [null]};
+    }
+
+    try{
+        await createAndWriteFile('data.json',data);
+    } catch {
+        console.log('cannot write cheeseDay value in data.json')
     }
 }
 export {randFood , rerand , setEx , setEat , cheeseDay};

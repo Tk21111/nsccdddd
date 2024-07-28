@@ -81,7 +81,7 @@ const Home = () => {
         <TouchableOpacity style={styles.listButton} onPress={() => navigation.navigate('List')}>
           <Text style={styles.listText}>LIST</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.calendarButton} onPress={() => navigation.navigate('Calendar')}>
+        <TouchableOpacity style={styles.calendarButton} onPress={() => navigation.navigate('Carlendar')}>
           <Text style={styles.calendarText}>CALENDAR</Text>
         </TouchableOpacity>
       </View>
