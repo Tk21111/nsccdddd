@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, ImageBackground, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
 import { updateUser } from '../hook/user';
 
 const Profile = () => {
@@ -15,20 +14,39 @@ const Profile = () => {
     { name: 'Lollipop', image: require('../assets/pr/lolipop-pr.png') }
   ];
 
-  console.log(itemPr)
+  console.log(itemPr);
+
+  const handleSave = async () => {
+    try {
+      // Assuming updateUser is an async function
+      await updateUser({ "pr": itemPr });
+      navigation.navigate('Data');
+    } catch (error) {
+      Alert.alert("Error", "Failed to update user profile");
+      console.error(error);
+    }
+  };
 
   return (
     <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
       <View style={styles.container}>
         <Image source={itemPr} style={styles.displayedImage} />
-        <Text style={styles.saveButtonText}> Yours Profile</Text>
+        <Text style={styles.saveButtonText}>Yours Profile</Text>
       </View>
       <View style={styles.container1}>
-      <ImageBackground source={require('../assets/blur.png')} style={styles.blurImg}>
+        <ImageBackground source={require('../assets/blur.png')} style={styles.blurImg}>
           <ScrollView contentContainerStyle={styles.itemList}>
             {items.map((item, index) => (
               <View key={index} style={styles.item}>
-                <TouchableOpacity style={styles.conIm} onPress={() => {setItem(item.image); updateUser({"pr" : item.image});} }>
+                <TouchableOpacity 
+                  style={styles.conIm} 
+                  onPress={() => {
+                    setItem(item.image); 
+                    updateUser({ "pr": item.image }).catch(error => {
+                      Alert.alert("Error", "Failed to update user profile");
+                      console.error(error);
+                    });
+                  }}>
                   <Image source={item.image} style={styles.itemImage} />
                 </TouchableOpacity>
               </View>
@@ -36,7 +54,7 @@ const Profile = () => {
           </ScrollView>
         </ImageBackground>
         <View>
-          <TouchableOpacity style={styles.saveButton} onPress={() => navigation.navigate('Data')}>
+          <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
             <Text style={styles.saveButtonText}>SAVE</Text>
           </TouchableOpacity>
         </View>
@@ -66,7 +84,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   blurImg: {
-    width : '100%',
+    width: '100%',
     height: '100%'
   },
   displayedImage: {
