@@ -1,31 +1,68 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image , ImageBackground} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 
 import { updateUser } from '../hook/user';
 import { foodListFilter } from '../hook/list';
+import { readFile } from '../fileManagement';
+
 const DataInpu = () => {
   const navigation = useNavigation();
   const [age, setAge] = useState('');
-  const [religion, setReligion] = useState();
+  const [religion, setReligion] = useState(null);
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
 
-  const a = () => {
-    try{
-      foodListFilter(religion.value);
-      updateUser({ age: age, religion: religion, bmi: (weight / (height ** 2)).toFixed(2) });
-    } catch {
-      console.log('fetch fail')
+  const [data, setData] = useState({ name: 'Donut' });
+
+  const items = [
+    { name: 'Pizza', image: require('../assets/pr/pizza-pr.png') },
+    { name: 'Donut', image: require('../assets/pr/donut-pr.png') },
+    { name: 'Fries', image: require('../assets/pr/fries-pr.png') },
+    { name: 'Lollipop', image: require('../assets/pr/lolipop-pr.png') }
+  ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const dataIn = await readFile('userConfigg.json');
+        setData(dataIn);
+        if (items.find(item => item.name === dataIn.pr)) {
+          console.log(items.find(item => item.name === dataIn.pr).image);
+        } else {
+          console.log('Item not found in list');
+        }
+      } catch (error) {
+        console.error('Failed to read file', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleNext = () => {
+    if (age && religion && height && weight) {
+      try {
+        foodListFilter(religion.value);
+        updateUser({ age: age, religion: religion, bmi: (weight / (height ** 2)).toFixed(2) });
+        navigation.navigate('Data1');
+      } catch {
+        console.log('Fetch failed');
+      }
+    } else {
+      console.log('Please fill all fields');
     }
-    
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={require('../assets/pr/donut-pr.png')} style={styles.image} />
+        {data.name && items.find(item => item.name === data.pr) ? (
+          <Image source={items.find(item => item.name === data.pr).image} style={styles.image} />
+        ) : (
+          <Text>No image available</Text>
+        )}
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.inputText}>Age</Text>
@@ -40,7 +77,7 @@ const DataInpu = () => {
         <RNPickerSelect
           onValueChange={(value) => setReligion(value)}
           items={[
-            { label: 'คริสต์', value: ''},
+            { label: 'คริสต์', value: '' },
             { label: 'อิสลาม', value: 'pork' },
             { label: 'Hinduism', value: 'beef' },
             { label: 'พุทธ', value: '' },
@@ -54,7 +91,7 @@ const DataInpu = () => {
             value: null,
           }}
         />
-        <Text style={styles.inputText}>Height</Text>        
+        <Text style={styles.inputText}>Height</Text>
         <TextInput
           style={styles.input}
           value={height}
@@ -62,7 +99,7 @@ const DataInpu = () => {
           placeholder="Height (m)"
           keyboardType="numeric"
         />
-        <Text style={styles.inputText}>Weight</Text>       
+        <Text style={styles.inputText}>Weight</Text>
         <TextInput
           style={styles.input}
           value={weight}
@@ -71,15 +108,7 @@ const DataInpu = () => {
           keyboardType="numeric"
         />
       </View>
-      <TouchableOpacity style={styles.nextButton} onPress={() => {
-    if (age && religion && height && weight) {
-      
-      a();
-      navigation.navigate('Data1');
-    } else {
-      console.log('Please fill all fields');
-    }
-  }}>
+      <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
         <Text style={styles.nextButtonText}>NEXT</Text>
       </TouchableOpacity>
     </View>
@@ -114,8 +143,9 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: '100%',
     marginBottom: 30,
-  },inputText : {
-    alignItems: 'flex-start'
+  },
+  inputText: {
+    alignItems: 'flex-start',
   },
   input: {
     height: 40,
@@ -133,7 +163,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginVertical: 10,
     paddingHorizontal: 10,
-    marginBottom : 30 ,
+    marginBottom: 30,
     backgroundColor: '#F0F0F0',
     justifyContent: 'center',
   },

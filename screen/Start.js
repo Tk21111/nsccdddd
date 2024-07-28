@@ -6,11 +6,6 @@ import { setUser } from '../hook/user';
 import { readFile } from '../fileManagement';
 const Start = () => {
     const navigation = useNavigation();
-    /*
-    if (readFile('userConfigg.json')){
-        navigation.navigate("Home");
-      };
-    */
     
     return(
         <ImageBackground style={styles.backgroundImage}source={require('../assets/start-page.png')}>
@@ -18,12 +13,12 @@ const Start = () => {
                 <Text style={styles.label}> {"FOOD Nutrition" + "\n"  + "Calculater App"}</Text>
                 <Text style={styles.label1}> {"we guarantee your good" + "\n"  + "heaith and well-being"}</Text>
                 <TouchableOpacity style={styles.Button} onPress={() => {
-                  //if(readFile('userConfigg.json')){
-                    //navigation.navigate('Home');
-                  //} else {
+                  if(!readFile('userConfigg.json')){
+                    navigation.navigate('Home');
+                  } else {
                     setUser({});
                     navigation.navigate('Username');
-                  //}
+                  }
                   
                   }}>
                     <Text style={styles.calButtonText}> LET'S GET Start</Text>

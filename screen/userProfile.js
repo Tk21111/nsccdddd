@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
 import { useNavigation } from '@react-navigation/native';
 import { readFile } from '../fileManagement'; // Ensure this is correctly imported
+import { foodListFilter } from '../hook/list';
+import Slider from '@react-native-community/slider';
 
 const UserProfile = () => {
   const navigation = useNavigation();
@@ -12,6 +15,7 @@ const UserProfile = () => {
   const [preferredIngredients, setPreferredIngredients] = useState('');
   const [ingredientsToAvoid, setIngredientsToAvoid] = useState('');
   const [chronicDiseases, setChronicDiseases] = useState('');
+  const [value ,setValue] = useState(item?.strict || 5);
 
   const [get, setGet] = useState(false);
   const [item, setItem] = useState(null);
@@ -43,12 +47,12 @@ const UserProfile = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Image 
-          source={require('../assets/pr/donut-pr.png')} 
+          source={item.pr} 
           style={styles.avatar} 
         />
         <View style={styles.header1}>
           <View style={styles.headerTextContainer}>
-            <Text style={styles.username}>Username</Text>
+            <Text style={styles.username}>{item?.name || "username"}</Text>
             <View style={styles.genderIconContainer}>
               <Text>♂️</Text>
               <TouchableOpacity onPress={() => {/* Add logic to change gender icon */}}>
@@ -66,21 +70,23 @@ const UserProfile = () => {
       </View>
       <View style={styles.formContainer}>
         <View style={styles.row1}>
-          <Text>Preferred Ingredients: </Text>
-          <TextInput
-            style={styles.input}
-            value={preferredIngredients}
-            onChangeText={setPreferredIngredients}
-            placeholder="Preferred Ingredients"
-          />
-        </View>
-        <View style={styles.row1}>
-          <Text>Ingredients to Avoid: </Text>
-          <TextInput
-            style={styles.input}
-            value={ingredientsToAvoid}
-            onChangeText={setIngredientsToAvoid}
-            placeholder="Ingredients to Avoid"
+        <Text>ศาสนา </Text>
+          <RNPickerSelect
+            onValueChange={(value) => setReligion(value)}
+            items={[
+              { label: 'คริสต์', value: ''},
+              { label: 'อิสลาม', value: 'pork' },
+              { label: 'Hinduism', value: 'beef' },
+              { label: 'พุทธ', value: '' },
+            ]}
+            style={{
+              inputIOS: styles.picker,
+              inputAndroid: styles.picker,
+            }}
+            placeholder={{
+              label: 'Religion',
+              value: null,
+            }}
           />
         </View>
         <View style={styles.row1}>
@@ -92,10 +98,21 @@ const UserProfile = () => {
             placeholder="Chronic Diseases"
           />
         </View>
+        <Text>How Strict r u: {value} /10</Text>
+                <Slider
+                  style={styles.slider}
+                  minimumValue={1}
+                  maximumValue={10}
+                  step={1}
+                  value={value}
+                  onValueChange={(val) => setValue(val)}
+                  minimumTrackTintColor="#1fb28a"
+                  maximumTrackTintColor="#d3d3d3"
+                  thumbTintColor="#b9e4c9"
+                />
       </View>
       <TouchableOpacity style={styles.saveButton} onPress={() => {
-        // Add save logic here
-        console.log('Save button pressed');
+        foodListFilter(ingredientsToAvoid);
       }}>
         <Text style={styles.saveButtonText}>SAVE</Text>
       </TouchableOpacity>
@@ -109,6 +126,24 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#F5F5DC',
   },
+  slider: {
+    width: 300,
+    height: 40,
+    alignSelf: 'center',
+  },
+  picker: {
+    height: 35,
+    width: 200,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 20,
+    marginVertical: 10,
+    paddingHorizontal: 10,
+    marginLeft: 90,
+    marginBottom : 30 ,
+    backgroundColor: '#F0F0F0',
+    justifyContent: 'center',
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -116,7 +151,7 @@ const styles = StyleSheet.create({
   },
   header1: {
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'baseline',
     marginBottom: 20,
   },
   avatar: {
@@ -131,9 +166,11 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginLeft: 20,
   },
   genderIconContainer: {
     flexDirection: 'row',
+    marginLeft: 40,
     alignItems: 'center',
   },
   formContainer: {
@@ -143,6 +180,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'flex-start',
     marginBottom: 10,
+    marginLeft: 20,
   },
   row1: {
     flexDirection: 'row',

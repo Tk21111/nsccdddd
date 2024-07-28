@@ -59,7 +59,7 @@ const List = () => {
                 <Text style={styles.itemCalories}>CAL : {item.cal}</Text>
               </View>
               <View style={styles.containerSub}>
-                  <Text style={styles.detail}>{item.like ? '👍' : '👎'}</Text>
+                  <Text style={styles.detailo}>{item.like ? '👍' : '👎'}</Text>
                 <Text style={styles.detail}>detail</Text>
               </View>
             </TouchableOpacity>
@@ -107,6 +107,13 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     backgroundColor: 'white',
     borderColor: 'black',
+    paddingVertical: 2,
+    paddingHorizontal: 5,
+    marginHorizontal: 16,
+    fontSize: 13,
+    alignItems: 'flex-end'
+  },
+  detailo: {
     paddingVertical: 2,
     paddingHorizontal: 5,
     marginHorizontal: 16,

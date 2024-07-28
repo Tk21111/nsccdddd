@@ -17,18 +17,25 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       // Ensure the user update logic is awaited if it's async
-      await updateUser({ pr: itemPr });
-      navigation.navigate('DataInpu');
+      await updateUser({ 'pr': itemPr.name });
     } catch (error) {
       Alert.alert("Error", "Failed to update user profile");
       console.error(error);
     }
+    try {
+      // Ensure the user update logic is awaited if it's async
+      navigation.navigate('DataInpu');
+    } catch (error) {
+      Alert.alert("Error", "Failed to navigate");
+      console.error(error);
+    }
+    
   };
 
   return (
     <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
       <View style={styles.container}>
-        <Image source={itemPr} style={styles.displayedImage} />
+        <Image source={itemPr.image} style={styles.displayedImage} />
         <Text style={styles.saveButtonText}>Yours ดีไส</Text>
       </View>
       <View style={styles.container1}>
@@ -39,8 +46,8 @@ const Profile = () => {
                 <TouchableOpacity 
                   style={styles.conIm} 
                   onPress={() => {
-                    setItem(item.image); 
-                    updateUser({ pr: item.image }).catch(error => {
+                    setItem(item); 
+                    updateUser({ pr: itemPr.name }).catch(error => {
                       Alert.alert("Error", "Failed to update user profile");
                       console.error(error);
                     });
