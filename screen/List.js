@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, ImageBackground , Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Provider as PaperProvider, Portal, Dialog } from 'react-native-paper';
+import { PortalProvider, Portal } from '@gorhom/portal';
 
 import { readFile } from '../fileManagement';
 import { updateLike, updateUnLike } from '../hook/list';
@@ -42,34 +42,40 @@ const List = () => {
 
   return (
     <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search"
-            value={searchText}
-            onChangeText={setSearchText}
-          />
+      <PortalProvider>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search"
+              value={searchText}
+              onChangeText={setSearchText}
+            />
+          </View>
+          <ScrollView contentContainerStyle={styles.itemList}>
+            {filteredItems.map((item, index) => (
+              <View key={index} style={[styles.item, {backgroundColor: color[index % color.length]}]}>
+                <Image source={item?.image ? { uri: item.image } : require('../assets/Screenshot 2024-07-14 141018.png')} style={styles.itemImage} />
+                <TouchableOpacity style={styles.itemDetails} onPress={() => navigation.navigate('List:note', { paramName: item.name })}>
+                  <View style={styles.containerSub1}>
+                    <Text style={styles.itemName}>{item.name}</Text>
+                    <Text style={styles.itemCalories}>CAL : {item.cal}</Text>
+                  </View>
+                  <View style={styles.containerSub}>
+                    <Text style={styles.detailo}>{item.like ? '👍' : '👎'}</Text>
+                    <Text style={styles.detail}>detail</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            ))}
+          </ScrollView>
         </View>
-        
-        <ScrollView contentContainerStyle={styles.itemList}>
-          {filteredItems.map((item, index) => (
-            <View key={index} style={[styles.item, {backgroundColor: color[index % color.length]}]}>
-              <Image source={item?.image ? { uri: item.image } : require('../assets/Screenshot 2024-07-14 141018.png')} style={styles.itemImage} />
-              <TouchableOpacity style={styles.itemDetails} onPress={() => navigation.navigate('List:note', { paramName: item.name })}>
-                <View style={styles.containerSub1}>
-                  <Text style={styles.itemName}>{item.name}</Text>
-                  <Text style={styles.itemCalories}>CAL : {item.cal}</Text>
-                </View>
-                <View style={styles.containerSub}>
-                  <Text style={styles.detailo}>{item.like ? '👍' : '👎'}</Text>
-                  <Text style={styles.detail}>detail</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          ))}
-        </ScrollView>
-      </View>
+        <Portal>
+          <TouchableOpacity style={styles.saveButton} onPress={() => navigation.navigate('ListUpdate')}>
+          <Text style={styles.saveButtonText}>+</Text>
+        </TouchableOpacity>
+        </Portal>
+      </PortalProvider>
     </ImageBackground>
   );
 };
@@ -79,6 +85,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 20,
+  },
+  buttonContainer: {
+    position: 'absolute',
+    top: 30,
+    width: '100%',
+    padding: 10,
+    backgroundColor: 'white',
+    zIndex: 10,
+    elevation: 10,
   },
   header: {
     flexDirection: 'row',
@@ -181,9 +196,11 @@ const styles = StyleSheet.create({
     padding: 9,
     borderRadius: 50,
     alignItems: 'center',
+    alignSelf: 'center',
     height: 50,
     width: 50,
     marginVertical: 10,
+    bottom: 50,
   },
   saveButtonText: {
     color: '#fff',

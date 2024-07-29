@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image , ImageBackground} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { useNavigation } from '@react-navigation/native';
 import { readFile } from '../fileManagement';
@@ -53,81 +53,83 @@ const UserProfile = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        {item && item.image ? (
-          <Image source={item.image} style={styles.avatar} />
-        ) : (
-          <Text>No image available</Text>
-        )}
-        <View style={styles.header1}>
-          <View style={styles.headerTextContainer}>
-            <Text style={styles.username}>{data?.username || "username"}</Text>
-            <View style={styles.genderIconContainer}>
-              <Text>♂️</Text>
-              <TouchableOpacity onPress={() => {navigation.navigate('Data')}}>
-                <Text>✏️</Text>
-              </TouchableOpacity>
+    <ImageBackground style={styles.backgroundImage}source={require('../assets/bg-profile.png')}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          {item && item.image ? (
+            <Image source={item.image} style={styles.avatar} />
+          ) : (
+            <Text>No image available</Text>
+          )}
+          <View style={styles.header1}>
+            <View style={styles.headerTextContainer}>
+              <Text style={styles.username}>{data?.username || "username"}</Text>
+              <View style={styles.genderIconContainer}>
+                <Text>♂️</Text>
+                <TouchableOpacity onPress={() => {navigation.navigate('Data')}}>
+                  <Text>✏️</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={styles.headerTextContainer}>
+              <View style={styles.row}>
+                <Text>bmi: {data.bmi || "no data"}</Text>
+                <Text>Age: {data.age || "no data"}</Text>
+              </View>
             </View>
           </View>
-          <View style={styles.headerTextContainer}>
-            <View style={styles.row}>
-              <Text>bmi: {data.bmi || "no data"}</Text>
-              <Text>Age: {data.age || "no data"}</Text>
-            </View>
+        </View>
+        <View style={styles.formContainer}>
+          <View style={styles.row1}>
+            <Text>ศาสนา </Text>
+            <RNPickerSelect
+              onValueChange={(value) => setReligion(value)}
+              items={[
+                { label: 'คริสต์', value: ''},
+                { label: 'อิสลาม', value: 'pork' },
+                { label: 'Hinduism', value: 'beef' },
+                { label: 'พุทธ', value: '' },
+              ]}
+              style={{
+                inputIOS: styles.picker,
+                inputAndroid: styles.picker,
+              }}
+              placeholder={{
+                label: 'Religion',
+                value: null,
+              }}
+            />
           </View>
-        </View>
-      </View>
-      <View style={styles.formContainer}>
-        <View style={styles.row1}>
-          <Text>ศาสนา </Text>
-          <RNPickerSelect
-            onValueChange={(value) => setReligion(value)}
-            items={[
-              { label: 'คริสต์', value: ''},
-              { label: 'อิสลาม', value: 'pork' },
-              { label: 'Hinduism', value: 'beef' },
-              { label: 'พุทธ', value: '' },
-            ]}
-            style={{
-              inputIOS: styles.picker,
-              inputAndroid: styles.picker,
-            }}
-            placeholder={{
-              label: 'Religion',
-              value: null,
-            }}
+          <View style={styles.row1}>
+            <Text>Chronic Diseases: </Text>
+            <TextInput
+              style={styles.input}
+              value={chronicDiseases}
+              onChangeText={setChronicDiseases}
+              placeholder="Chronic Diseases"
+            />
+          </View>
+          <Text>How Strict are you: {value} /10</Text>
+          <Slider
+            style={styles.slider}
+            minimumValue={1}
+            maximumValue={10}
+            step={1}
+            value={value}
+            onValueChange={(val) => setValue(val)}
+            minimumTrackTintColor="#1fb28a"
+            maximumTrackTintColor="#d3d3d3"
+            thumbTintColor="#b9e4c9"
           />
         </View>
-        <View style={styles.row1}>
-          <Text>Chronic Diseases: </Text>
-          <TextInput
-            style={styles.input}
-            value={chronicDiseases}
-            onChangeText={setChronicDiseases}
-            placeholder="Chronic Diseases"
-          />
-        </View>
-        <Text>How Strict are you: {value} /10</Text>
-        <Slider
-          style={styles.slider}
-          minimumValue={1}
-          maximumValue={10}
-          step={1}
-          value={value}
-          onValueChange={(val) => setValue(val)}
-          minimumTrackTintColor="#1fb28a"
-          maximumTrackTintColor="#d3d3d3"
-          thumbTintColor="#b9e4c9"
-        />
+        <TouchableOpacity style={styles.saveButton} onPress={() => {
+          foodListFilter(ingredientsToAvoid);
+          navigation.navigate("Home");
+        }}>
+          <Text style={styles.saveButtonText}>SAVE</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.saveButton} onPress={() => {
-        foodListFilter(ingredientsToAvoid);
-        navigation.navigate("Home");
-      }}>
-        <Text style={styles.saveButtonText}>SAVE</Text>
-      </TouchableOpacity>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -135,8 +137,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#F5F5DC',
   },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+},
   slider: {
     width: 300,
     marginTop : 20,

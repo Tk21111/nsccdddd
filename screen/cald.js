@@ -229,9 +229,9 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   backgroundImage1: {
-    borderRadius: 10,
-    flex: 1,
+    borderRadius: 20,
     resizeMode: 'cover',
+    flex: 1,
   },
   timePickerContainer: {
     flexDirection: 'column',
