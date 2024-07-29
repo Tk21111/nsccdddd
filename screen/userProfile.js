@@ -66,7 +66,7 @@ const UserProfile = () => {
               <Text style={styles.username}>{data?.username || "username"}</Text>
               <View style={styles.genderIconContainer}>
                 <Text>♂️</Text>
-                <TouchableOpacity onPress={() => {navigation.navigate('Data')}}>
+                <TouchableOpacity onPress={() => {navigation.navigate('Datain')}}>
                   <Text>✏️</Text>
                 </TouchableOpacity>
               </View>
