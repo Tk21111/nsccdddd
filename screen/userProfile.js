@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image , ImageBackground} from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { readFile } from '../fileManagement';
 import { foodListFilter } from '../hook/list';
@@ -10,6 +10,7 @@ const UserProfile = () => {
   const navigation = useNavigation();
   const [age, setAge] = useState('');
   const [bmi, setBmi] = useState('');
+  const [religion, setReligion] = useState(null);
   const [preferredIngredients, setPreferredIngredients] = useState('');
   const [ingredientsToAvoid, setIngredientsToAvoid] = useState('');
   const [chronicDiseases, setChronicDiseases] = useState('');
@@ -81,24 +82,20 @@ const UserProfile = () => {
         </View>
         <View style={styles.formContainer}>
           <View style={styles.row1}>
-            <Text>ศาสนา </Text>
-            <RNPickerSelect
-              onValueChange={(value) => setReligion(value)}
-              items={[
-                { label: 'คริสต์', value: ''},
-                { label: 'อิสลาม', value: 'pork' },
-                { label: 'Hinduism', value: 'beef' },
-                { label: 'พุทธ', value: '' },
-              ]}
-              style={{
-                inputIOS: styles.picker,
-                inputAndroid: styles.picker,
-              }}
-              placeholder={{
-                label: 'Religion',
-                value: null,
-              }}
-            />
+            <Text style={styles.inputText} >ศาสนา </Text>
+            <View style={[{borderColor: 'black' , borderWidth: 2,marginLeft: 10 , width: '100%', alignItems: 'center'}]}>
+              <Picker
+                mode='dropdown'
+                selectedValue={religion}
+                onValueChange={(itemValue) => setReligion(itemValue)}
+                > 
+                <Picker.Item label="อิสลาม" value="pork" />
+                <Picker.Item label="Hinduism" value="beef" />
+                <Picker.Item label="อื่นๆ" value="" />
+              </Picker>
+            </View>
+          <View>
+        </View>
           </View>
           <View style={styles.row1}>
             <Text>Chronic Diseases: </Text>
@@ -161,6 +158,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#F0F0F0',
     justifyContent: 'center',
   },
+  inputText: {
+    alignItems: 'flex-start',
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
+    padding: 10,
   },
   input: {
     flex: 1,
