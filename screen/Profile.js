@@ -33,10 +33,10 @@ const Profile = () => {
   };
 
   return (
-    <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
+    <ImageBackground source={require('../assets/bg-pr.png')} style={styles.backgroundImage}>
       <View style={styles.container}>
         <Image source={itemPr.image} style={styles.displayedImage} />
-        <Text style={styles.saveButtonText}>Yours ดีไส</Text>
+
       </View>
       <View style={styles.container1}>
         <ImageBackground source={require('../assets/blur.png')} style={styles.blurImg}>
@@ -60,7 +60,7 @@ const Profile = () => {
         </ImageBackground>
         <View>
           <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-            <Text style={styles.saveButtonText}>SAVE</Text>
+            <Text style={styles.saveButtonText}>NEXT</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   container1: {
-    marginVertical: '50%',
+    marginVertical: '60%',
     alignItems: 'center',
     padding: 20,
   },
@@ -89,17 +89,19 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   blurImg: {
-    width: '100%',
-    height: '100%'
+    width: 80*4,
+    height: 80*4,
+    borderRadius:40*4,
   },
   displayedImage: {
     borderRadius: 25,
     borderWidth: 2,
     borderColor: 'black',
-    width: '80%',
-    height: 200,
+    width: 240,
+    height: 240,
+    backgroundColor: 'white',
     resizeMode: 'contain',
-    marginBottom: 20,
+    marginBottom: 40,
   },
   itemList: {
     opacity: .9,
@@ -110,7 +112,6 @@ const styles = StyleSheet.create({
   item: {
     paddingTop: 10,
     padding: 4,
-    backgroundColor: 'white',
     width: '30%',
     height: 150,
     marginTop: 10,
@@ -122,22 +123,28 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderWidth: 2,
     borderColor: 'black',
-    width: '90%',
-    height: 115,
+    paddingHorizontal: 30,
+    backgroundColor: 'white',
+    width: 90,
+    height: 90,
     marginBottom: 10,
   },
   saveButton: {
+    marginTop: 50,
     backgroundColor: 'black',
-    padding: 9,
+    padding: 10,
     borderRadius: 50,
     alignItems: 'center',
+    fontSize: 8, 
     height: 50,
     width: 100,
     marginVertical: 10,
   },
   saveButtonText: {
     color: 'white',
-    fontSize: 20,
+    paddingVertical: '5%', 
+    fontSize: 13
+    ,
   },
 });
 

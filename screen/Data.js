@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import RNPickerSelect from 'react-native-picker-select';
+import { Picker } from '@react-native-picker/picker';
 
 import { updateUser } from '../hook/user';
 import { foodListFilter } from '../hook/list';
@@ -41,11 +41,12 @@ const DataInpu = () => {
     fetchData();
   }, []);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (age && religion && height && weight) {
       try {
-        foodListFilter(religion.value);
-        updateUser({ age: age, religion: religion, bmi: (weight / (height ** 2)).toFixed(2) });
+        console.log(religion)
+        await foodListFilter(religion);
+        await updateUser({ age, religion, bmi: (weight / (height ** 2)).toFixed(2) });
         navigation.navigate('Data1');
       } catch {
         console.log('Fetch failed');
@@ -74,23 +75,17 @@ const DataInpu = () => {
           keyboardType="numeric"
         />
         <Text style={styles.inputText}>ศาสนา(รับประทาน)</Text>
-        <RNPickerSelect
-          onValueChange={(value) => setReligion(value)}
-          items={[
-            { label: 'คริสต์', value: '' },
-            { label: 'อิสลาม', value: 'pork' },
-            { label: 'Hinduism', value: 'beef' },
-            { label: 'พุทธ', value: '' },
-          ]}
-          style={{
-            inputIOS: styles.picker,
-            inputAndroid: styles.picker,
-          }}
-          placeholder={{
-            label: 'Religion',
-            value: null,
-          }}
-        />
+        <View>
+          <Picker
+            mode='dropdown'
+            selectedValue={religion}
+            onValueChange={(itemValue) => setReligion(itemValue)}
+          >
+            <Picker.Item label="อิสลาม" value="pork" />
+            <Picker.Item label="Hinduism" value="beef" />
+            <Picker.Item label="อื่นๆ" value="" />
+          </Picker>
+        </View>
         <Text style={styles.inputText}>Height</Text>
         <TextInput
           style={styles.input}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput , ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Provider as PaperProvider, Portal, Dialog } from 'react-native-paper';
 
 import { readFile } from '../fileManagement';
 import { updateLike, updateUnLike } from '../hook/list';
@@ -10,8 +11,9 @@ const List = () => {
   const [items, setItems] = useState([]);
   const [get, setGet] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const [isDialogVisible, setIsDialogVisible] = useState(false); // Add state for dialog visibility
 
-  const color = ['#CEC2FF','#F89F9F','#CAD4DB','#F8DF9F','#FFE459','#B1F89F']
+  const color = ['#CEC2FF','#F89F9F','#CAD4DB','#F8DF9F','#FFE459','#B1F89F'];
 
   useEffect(() => {
     const getList = async () => {
@@ -32,7 +34,7 @@ const List = () => {
     if (!get) {
       getList();
     }
-  }, [items, get]);
+  }, [get]);
 
   const filteredItems = items.filter(item =>
     item.name.toLowerCase().includes(searchText.toLowerCase())
@@ -40,38 +42,34 @@ const List = () => {
 
   return (
     <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search"
-          value={searchText}
-          onChangeText={setSearchText}
-        />
-      </View>
-      <ScrollView contentContainerStyle={styles.itemList}>
-        {filteredItems.map((item, index) => (
-          <View key={index} style={[styles.item, {backgroundColor : color[index]}]}>
-            <Image source={require('../assets/Screenshot 2024-07-14 141018.png')} style={styles.itemImage} />
-            <TouchableOpacity style={styles.itemDetails} onPress={() => navigation.navigate('List:note', { paramName: item.name })}>
-              <View style={styles.containerSub1}>
-                <Text style={styles.itemName}>{item.name}</Text>
-                <Text style={styles.itemCalories}>CAL : {item.cal}</Text>
-              </View>
-              <View style={styles.containerSub}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search"
+            value={searchText}
+            onChangeText={setSearchText}
+          />
+        </View>
+        
+        <ScrollView contentContainerStyle={styles.itemList}>
+          {filteredItems.map((item, index) => (
+            <View key={index} style={[styles.item, {backgroundColor: color[index % color.length]}]}>
+              <Image source={item?.image ? { uri: item.image } : require('../assets/Screenshot 2024-07-14 141018.png')} style={styles.itemImage} />
+              <TouchableOpacity style={styles.itemDetails} onPress={() => navigation.navigate('List:note', { paramName: item.name })}>
+                <View style={styles.containerSub1}>
+                  <Text style={styles.itemName}>{item.name}</Text>
+                  <Text style={styles.itemCalories}>CAL : {item.cal}</Text>
+                </View>
+                <View style={styles.containerSub}>
                   <Text style={styles.detailo}>{item.like ? '👍' : '👎'}</Text>
-                <Text style={styles.detail}>detail</Text>
-              </View>
-            </TouchableOpacity>
-            {/*<Text onPress={() => { updateLike(item.name); setGet(false); }}> 👍 </Text>*/}
-            {/*<Text onPress={() => { updateUnLike(item.name); setGet(false); }}> 👎 </Text>*/}
-          </View>
-        ))}
-      </ScrollView>
-      <TouchableOpacity style={styles.saveButton} onPress={() => navigation.navigate('ListUpdate')}>
-        <Text style={styles.saveButtonText}>+</Text>
-      </TouchableOpacity>
-    </View>
+                  <Text style={styles.detail}>detail</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
     </ImageBackground>
   );
 };
@@ -92,11 +90,11 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
   },
-  containerSub : {
+  containerSub: {
     alignContent: 'space-around',
     flexDirection: 'row'
   },
-  containerSub1 : {
+  containerSub1: {
     marginLeft: '15%',
     marginBottom: '3%',
     alignContent: 'space-around',
@@ -110,7 +108,8 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     paddingHorizontal: 5,
     marginHorizontal: 16,
-    fontSize: 13,
+    fontSize: 11,
+    textAlign: 'center',
     alignItems: 'flex-end'
   },
   detailo: {
@@ -134,6 +133,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
+    backgroundColor: '#fff',
   },
   itemList: {
     flexDirection: 'row',
@@ -141,24 +141,23 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   item: {
-    paddingTop: 10,
+    paddingTop: 2,
     padding: 8,
     backgroundColor: '#CAD4DB',
-    width: '45%',
-    height: '33%',
-    marginTop: 10,
+    width: 165,
+    height: 250,
+    marginTop: 30,
     borderRadius: 25,
     opacity: .7,
     justifyContent: 'center', // Center content vertically
     alignItems: 'center',     // Center content horizontally
   },
-
   itemImage: {
     borderRadius: 25,
     borderWidth: 2,
     borderColor: 'black',
     width: '90%',
-    height: 115,
+    height: 120,
     marginBottom: 10,
   },
   itemDetails: {
@@ -174,7 +173,7 @@ const styles = StyleSheet.create({
   itemCalories: {
     fontSize: 13,
     color: '#3E3E3E',
-    fontWeight : 'bold',
+    fontWeight: 'bold',
     textAlign: 'left',
   },
   saveButton: {

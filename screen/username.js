@@ -17,9 +17,9 @@ const Username = () => {
       };
     */
     return(
-        <ImageBackground style={styles.backgroundImage}source={require('../assets/username-page.png')}>
+        <ImageBackground style={styles.backgroundImage}source={require('../assets/bg-username.png')}>
             <View>
-                <Text style={styles.label}>{"Username"}</Text>
+                <Text style={styles.label}>{"User name"}</Text>
                 <TextInput 
                 style={styles.input} 
                 placeholder="username" 
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     input: {
         alignSelf : 'center',
         backgroundColor: '#EAE7E3',
+        fontWeight: '200',
         width: '70%',
         height: 60,
         textAlign: 'center',
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         fontSize: 15,
         letterSpacing: .5,
-        fontWeight: 'bold'
+        fontWeight: '500',
     },
     label2: {
         marginLeft: '15%',

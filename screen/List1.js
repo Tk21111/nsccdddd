@@ -39,6 +39,7 @@ const List1 = () => {
         }
     }, [data, paramName]);
 
+
     return (
         <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
             <View style={styles.container}>
@@ -52,7 +53,7 @@ const List1 = () => {
             </View>
                 
                 <Image 
-                    source={require("../assets/Screenshot 2024-07-14 141018.png")} 
+                    source={data?.image ? { uri: data.image } :  require("../assets/Screenshot 2024-07-14 141018.png")} 
                     style={styles.image} 
                 />
                 <Text style={styles.labelName}>{data ? data.name: "loading"}</Text>
@@ -126,9 +127,9 @@ const styles = StyleSheet.create({
       height: 24,
     },
     image: {
-      borderRadius: 25,
-      borderWidth: 2,
-      borderColor: 'black',
+        borderRadius: 25,
+        borderWidth: 2,
+        borderColor: 'black',
         width: 200,
         height: 200,
         marginVertical: 20,

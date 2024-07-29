@@ -19,6 +19,8 @@ const foodListUpdate = async (data) => {
 
 //input : list 
 const foodListFilter = async(data) => {
+
+    console.log('foodlistfilter')
     let prv = await readFile('food.json');
 
     console.log(prv)
