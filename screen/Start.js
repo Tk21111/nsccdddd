@@ -11,9 +11,9 @@ const Start = () => {
         <ImageBackground style={styles.backgroundImage}source={require('../assets/start-page.png')}>
             <View>
                 <Text style={styles.label}> {"FOOD Nutrition" + "\n"  + "Calculater App"}</Text>
-                <Text style={styles.label1}> {"we guarantee your good" + "\n"  + "heaith and well-being"}</Text>
+                <Text style={styles.label1}> {"we guarantee your good" + "\n"  + "heath and well-being"}</Text>
                 <TouchableOpacity style={styles.Button} onPress={() => {
-                  if(readFile('userConfigg.json')){
+                  if(!readFile('userConfigg.json')){
                     navigation.navigate('Home');
                   } else {
                     setUser({});

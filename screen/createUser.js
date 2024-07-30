@@ -31,8 +31,7 @@ const CreateUser = () => {
     const onChangeUsername = (e) => setUsername(e);
     const onChangeBmi = (e) => setBmi(e);
     return (
-        <SafeAreaView>
-            
+      <View>
             <TextInput
                 style={styles.input}
                 onChangeText={onChangeUsername}
@@ -46,9 +45,7 @@ const CreateUser = () => {
             />
 
             <Button title="Set user" onPress={() => {setUser({"username" : username , "bmi" : bmi , "cal" : 2000 , "strict" : 2}); navigation.navigate("Home"); }} />
-        </SafeAreaView>
-
-        
+            </View>
           );
 };
 

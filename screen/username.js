@@ -38,7 +38,12 @@ const Username = () => {
                   maximumTrackTintColor="#d3d3d3"
                   thumbTintColor="#b9e4c9"
                 />
-                <TouchableOpacity style={styles.Button} onPress={() => {updateUser({"username": userName , "srict" : value}); navigation.navigate('Profile')}}>
+                <TouchableOpacity style={styles.Button} onPress={() => {updateUser({
+                  "username": userName , "srict" : value}); 
+                  setUserName('');
+                  setValue(1);
+                  navigation.navigate('Profile');
+                  }}>
                     <Text style={styles.calButtonText}> NEXT</Text>
                 </TouchableOpacity>
             </View>

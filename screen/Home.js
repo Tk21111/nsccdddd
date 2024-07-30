@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Alert, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { readFile } from '../fileManagement';  // Ensure this path is correct
 import { randFood, rerand } from '../hook/rand';  // Ensure this path is correct
@@ -40,7 +40,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [dialogVisible]);
 
   const checkDate = async () => {
     const dateObj = new Date();
@@ -64,9 +64,9 @@ const Home = () => {
 
   const slice = () => {
     let slices = [
-      { percent: 0.34, color: '#FED0EE' },  // B
-      { percent: 0.33, color: '#D0E8FF' },  // L
-      { percent: 0.33, color: '#FBE38E' }   // D
+      { percent: 0.34, color: '#FED0EE' , C: 'B' },  // B
+      { percent: 0.33, color: '#D0E8FF' , C: 'L'},  // L
+      { percent: 0.33, color: '#FBE38E' , C: 'D'}   // D
     ];
 
     let cumulativePercent = 0;
@@ -87,7 +87,7 @@ const Home = () => {
         `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`,
         'L 0 0',
       ].join(' ');
-      return <Path d={pathData} fill={slice.color} key={pathData} onPress={() => { Alert.alert('hi'); }} />;
+      return <Path d={pathData} fill={slice.color} key={pathData} onPress={() => {showDialog(slice.C)}} />;
     });
   };
 
@@ -99,9 +99,10 @@ const Home = () => {
     setDialogVisible(prevState => ({ ...prevState, [key]: false }));
   };
 
-  const foodItem = data?.[date]?.food[1] || {};
+  const foodItem = data?.[FuncdateOnly()]?.food || {};
 
   return (
+    <ImageBackground source={require("../assets/bg-main.png")}>
     <PortalProvider>
       <View style={styles.container}>
         <View style={styles.header}>
@@ -110,7 +111,7 @@ const Home = () => {
           </TouchableOpacity>
           <TouchableOpacity style={[styles.notificationButton, { marginLeft: 230 }]} onPress={() => navigation.navigate('Cmd')}>
             <Image
-              source={require('../assets/Screenshot 2024-07-14 141018.png')}
+              source={typeof userConfig.pr === "number"? userConfig.pr : {uri : userConfig.pr}} 
               style={[styles.imageH, { borderRadius: 12, borderWidth: 2, borderColor: 'black' }]}
             />
           </TouchableOpacity>
@@ -136,8 +137,39 @@ const Home = () => {
           <Dialog visible={dialogVisible.L} onDismiss={() => hideDialog('L')}>
             <Dialog.Content>
               <View style={styles.dialog}>
-                <Image style={styles.imageS} source={foodItem.image ? { uri: foodItem.image } : require('../assets/Screenshot 2024-07-14 141018.png')} />
-                <Text>{foodItem.name || "no name"} cal : {foodItem.cal || "XX"}</Text>
+                <Image style={styles.imageS} source={foodItem[1]?.image ? { uri: foodItem[1].image } : require('../assets/Screenshot 2024-07-14 141018.png')} />
+                <Text style={[{marginLeft: '7%' , paddingBottom: '4%'}]}>name : {foodItem[1]?.name || "no name L"} {"\n"}cal : {foodItem[1]?.cal || "XX"}</Text>
+              </View>
+              <View style={styles.bottomRow}>
+                <TouchableOpacity style={[styles.cal, { borderRadius: 12, borderWidth: 2, borderColor: 'black', backgroundColor: '#FFEBB8', alignSelf: 'center',}]} onPress={() => navigation.navigate('List:note', { paramName: foodItem[1]?.name })}>
+                  <Text style={styles.calText}>How to make</Text>
+                </TouchableOpacity>
+              </View>
+            </Dialog.Content>
+          </Dialog>
+          <Dialog visible={dialogVisible.B} onDismiss={() => hideDialog('B')}>
+            <Dialog.Content>
+              <View style={styles.dialog}>
+                <Image style={styles.imageS} source={foodItem[0]?.image ? { uri: foodItem[0].image } : require('../assets/Screenshot 2024-07-14 141018.png')} />
+                <Text style={[{marginLeft: '7%' , paddingBottom: '4%'}]}>name : {foodItem[0]?.name || "no name L"} {"\n"}cal : {foodItem[0]?.cal || "XX"}</Text>
+              </View>
+              <View style={styles.bottomRow}>
+                <TouchableOpacity style={[styles.cal, { borderRadius: 12, borderWidth: 2, borderColor: 'black', backgroundColor: '#FFEBB8', alignSelf: 'center',}]} onPress={() => navigation.navigate('List:note', { paramName: foodItem[1]?.name })}>
+                  <Text style={styles.calText}>How to make</Text>
+                </TouchableOpacity>
+              </View>
+            </Dialog.Content>
+          </Dialog>
+          <Dialog visible={dialogVisible.D} onDismiss={() => hideDialog('D')}>
+            <Dialog.Content>
+              <View style={styles.dialog}>
+                <Image style={styles.imageS} source={foodItem[2]?.image ? { uri: foodItem[2].image } : require('../assets/Screenshot 2024-07-14 141018.png')} />
+                <Text style={[{marginLeft: '7%' , paddingBottom: '4%'}]}>name : {foodItem[1]?.name || "no name L"} {"\n"}cal : {foodItem[2]?.cal || "XX"}</Text>
+              </View>
+              <View style={styles.bottomRow}>
+                <TouchableOpacity style={[styles.cal, { borderRadius: 12, borderWidth: 2, borderColor: 'black', backgroundColor: '#FFEBB8', alignSelf: 'center',}]} onPress={() => navigation.navigate('List:note', { paramName: foodItem[1]?.name })}>
+                  <Text style={styles.calText}>How to make</Text>
+                </TouchableOpacity>
               </View>
             </Dialog.Content>
           </Dialog>
@@ -163,7 +195,7 @@ const Home = () => {
               style={styles.centerImage1}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Incal')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Carlendar')}>
             <Image
               source={require('../assets/calendar.png')}
               style={styles.centerImage1}
@@ -171,24 +203,24 @@ const Home = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.bottomRow}>
-          <TouchableOpacity style={[styles.cal, { borderRadius: 12, borderWidth: 2, borderColor: 'black', backgroundColor: '#FFEBB8', alignSelf: 'center', height: 40, width: '44%' }]} onPress={() => navigation.navigate('Calory')}>
+          <TouchableOpacity style={[styles.cal, { borderRadius: 12, borderWidth: 2, borderColor: 'black', backgroundColor: '#FFEBB8', alignSelf: 'center',}]} onPress={() => navigation.navigate('Calory')}>
             <Text style={styles.calText}>How to make</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.bottomRow}>
-          <TouchableOpacity style={[styles.cal, { borderRadius: 12, borderWidth: 2, borderColor: 'black', backgroundColor: 'white', alignSelf: 'center', height: 60, width: '54%', paddingVertical: 7, marginBottom: 20 }]} onPress={() => rerand()}>
+          <TouchableOpacity style={[styles.cal, { borderRadius: 12, borderWidth: 2, borderColor: 'black', backgroundColor: 'white', alignSelf: 'center', paddingVertical: 7, marginBottom: 20 }]} onPress={() => rerand()}>
             <Text style={[styles.calText, { fontSize: 24 }]}>RANDOM</Text>
           </TouchableOpacity>
         </View>
       </View>
     </PortalProvider>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: '#FFF5E1',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
@@ -254,8 +286,9 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start'
   },
   cal: {
-    height: 40,
-    width: 100,
+    textAlignVertical: 'center',
+    paddingVertical: '2%',
+    paddingHorizontal: '3%',
     alignSelf: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#F2FFDE'

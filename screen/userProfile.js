@@ -8,8 +8,6 @@ import Slider from '@react-native-community/slider';
 
 const UserProfile = () => {
   const navigation = useNavigation();
-  const [age, setAge] = useState('');
-  const [bmi, setBmi] = useState('');
   const [religion, setReligion] = useState(null);
   const [preferredIngredients, setPreferredIngredients] = useState('');
   const [ingredientsToAvoid, setIngredientsToAvoid] = useState('');
@@ -57,67 +55,32 @@ const UserProfile = () => {
     <ImageBackground style={styles.backgroundImage}source={require('../assets/bg-profile.png')}>
       <View style={styles.container}>
         <View style={styles.header}>
-          {item && item.image ? (
-            <Image source={item.image} style={styles.avatar} />
-          ) : (
-            <Text>No image available</Text>
-          )}
+        <Image source={typeof data.pr === "number"? data.pr : {uri : data.pr}} style={styles.avatar}/>
           <View style={styles.header1}>
             <View style={styles.headerTextContainer}>
-              <Text style={styles.username}>{data?.username || "username"}</Text>
+              <Text style={styles.username}>{data?.username?.substr(0,10) || "username"}</Text>
               <View style={styles.genderIconContainer}>
-                <Text>♂️</Text>
-                <TouchableOpacity onPress={() => {navigation.navigate('Datain')}}>
+                <Text>{data.male ? '♂️ ': '♀️'}</Text>
+                <TouchableOpacity onPress={() => {navigation.navigate('Username')}}>
                   <Text>✏️</Text>
                 </TouchableOpacity>
               </View>
             </View>
             <View style={styles.headerTextContainer}>
               <View style={styles.row}>
-                <Text>bmi: {data.bmi || "no data"}</Text>
-                <Text>Age: {data.age || "no data"}</Text>
+                <Text>bmi: {data?.bmi|| "no data"}</Text>
+                <Text>Age: {(data?.age) + " ปี" || "no data"}</Text>
               </View>
             </View>
           </View>
         </View>
         <View style={styles.formContainer}>
-          <View style={styles.row1}>
-            <Text style={styles.inputText} >ศาสนา </Text>
-            <View style={[{borderColor: 'black' , borderWidth: 2,marginLeft: 10 , width: '100%', alignItems: 'center'}]}>
-              <Picker
-                mode='dropdown'
-                selectedValue={religion}
-                onValueChange={(itemValue) => setReligion(itemValue)}
-                > 
-                <Picker.Item label="อิสลาม" value="pork" />
-                <Picker.Item label="Hinduism" value="beef" />
-                <Picker.Item label="อื่นๆ" value="" />
-              </Picker>
-            </View>
+          <Text style={styles.inputText} >วัตถุดิบที่รับประทานไม่ได้ : {data?.religion} </Text>
+          <Text style={styles.inputText} >กิน clean : {(<Text style={[styles.inputText , {color: 'green' , fontWeight: 'bold' , fontSize: 24}]}> {data?.srict} </Text>)} /10 </Text>
+
           <View>
         </View>
           </View>
-          <View style={styles.row1}>
-            <Text>Chronic Diseases: </Text>
-            <TextInput
-              style={styles.input}
-              value={chronicDiseases}
-              onChangeText={setChronicDiseases}
-              placeholder="Chronic Diseases"
-            />
-          </View>
-          <Text>How Strict are you: {value} /10</Text>
-          <Slider
-            style={styles.slider}
-            minimumValue={1}
-            maximumValue={10}
-            step={1}
-            value={value}
-            onValueChange={(val) => setValue(val)}
-            minimumTrackTintColor="#1fb28a"
-            maximumTrackTintColor="#d3d3d3"
-            thumbTintColor="#b9e4c9"
-          />
         </View>
         <TouchableOpacity style={styles.saveButton} onPress={() => {
           foodListFilter(ingredientsToAvoid);
@@ -125,7 +88,7 @@ const UserProfile = () => {
         }}>
           <Text style={styles.saveButtonText}>SAVE</Text>
         </TouchableOpacity>
-      </View>
+     
     </ImageBackground>
   );
 };
@@ -138,6 +101,13 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover',
+},
+image: {
+  width: 200,
+  height: 200,
+  borderColor: 'gray',
+  borderWidth: 2,
+  borderRadius: 20,
 },
   slider: {
     width: 300,
@@ -168,13 +138,16 @@ const styles = StyleSheet.create({
   },
   header1: {
     flexDirection: 'column',
+    width: '70%',
     alignItems: 'baseline',
     marginBottom: 20,
   },
   avatar: {
     width: 80,
     height: 80,
-    borderRadius: 40,
+    borderRadius: 20,
+    borderColor: 'black',
+    borderWidth: 2,
   },
   headerTextContainer: {
     marginLeft: 20,
@@ -183,12 +156,12 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginLeft: 20,
+    marginLeft: '8%',
   },
   genderIconContainer: {
     flexDirection: 'row',
-    marginLeft: 40,
     alignItems: 'center',
+    alignSelf: 'flex-end',
   },
   formContainer: {
     flex: 1,

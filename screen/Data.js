@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image , ScrollView, ImageBackground, Alert} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 
@@ -10,29 +10,18 @@ import { readFile } from '../fileManagement';
 const DataInpu = () => {
   const navigation = useNavigation();
   const [age, setAge] = useState('');
-  const [religion, setReligion] = useState(null);
+  const [religion, setReligion] = useState([]);
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
+  const [male , setMale] = useState(false)
 
   const [data, setData] = useState({ name: 'Donut' });
-
-  const items = [
-    { name: 'Pizza', image: require('../assets/pr/pizza-pr.png') },
-    { name: 'Donut', image: require('../assets/pr/donut-pr.png') },
-    { name: 'Fries', image: require('../assets/pr/fries-pr.png') },
-    { name: 'Lollipop', image: require('../assets/pr/lolipop-pr.png') }
-  ];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const dataIn = await readFile('userConfigg.json');
         setData(dataIn);
-        if (items.find(item => item.name === dataIn.pr)) {
-          console.log(items.find(item => item.name === dataIn.pr));
-        } else {
-          console.log('Item not found in list');
-        }
       } catch (error) {
         console.error('Failed to read file', error);
       }
@@ -46,26 +35,36 @@ const DataInpu = () => {
       try {
         console.log(religion)
         await foodListFilter(religion);
-        await updateUser({ age, religion, bmi: (weight / (height ** 2)).toFixed(2) });
+        await updateUser({ age, religion, male,  bmi: (weight / (height ** 2)).toFixed(2) });
+        setAge('')
+        setHeight(0);
+        setWeight(0);
+        setReligion([]);
         navigation.navigate('Data1');
       } catch {
         console.log('Fetch failed');
       }
     } else {
-      console.log('Please fill all fields');
+      Alert.alert("pls fill all fields")
     }
   };
-
   return (
+    <ImageBackground style={styles.backgroundImage} source={require('../assets/data-page.png')}>
+    <ScrollView>
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        {data.pr && items.find(item => item.name === data.pr) ? (
-          <Image source={items.find(item => item.name === data.pr).image} style={styles.image} />
-        ) : (
-          <Text>No image available</Text>
-        )}
+          <Image source={typeof data.pr === "number"? data.pr : {uri : data.pr}} style={styles.image}/>
       </View>
       <View style={styles.inputContainer}>
+        <Text style={styles.buttonText}>{(male? "Male" : "Female")}</Text>
+          <View style={styles.container1}>
+            <TouchableOpacity style={[styles.button, {backgroundColor: '#FFB2EE'}]} onPress={()=> setMale(false)}>
+              <Text style={styles.buttonText}>Female</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.button, {backgroundColor: '#8CEAFF'}]} onPress={()=>setMale(true)}>
+              <Text style={styles.buttonText}>Male</Text>
+            </TouchableOpacity>
+        </View>
         <Text style={styles.inputText}>Age</Text>
         <TextInput
           style={styles.input}
@@ -74,17 +73,20 @@ const DataInpu = () => {
           placeholder="Age"
           keyboardType="numeric"
         />
-        <Text style={styles.inputText}>ศาสนา(รับประทาน)</Text>
+        <Text style={styles.inputText}>วัตถุดิบที่รับประทานไม่ได้ {"\n" + religion}</Text>
         <View>
           <Picker
             mode='dropdown'
             selectedValue={religion}
-            onValueChange={(itemValue) => setReligion(itemValue)}
+            onValueChange={(itemValue) => setReligion([...religion , itemValue])}
           >
-            <Picker.Item label="อิสลาม" value="pork" />
-            <Picker.Item label="Hinduism" value="beef" />
-            <Picker.Item label="อื่นๆ" value="" />
+            <Picker.Item label="หมู" value="pork" />
+            <Picker.Item label="เนื้อ(วัว)" value="beef" />
+            <Picker.Item label="ไก่" value="chicken" />
           </Picker>
+          <TouchableOpacity style={[styles.button, {backgroundColor: '#FFEBB8' , width: 100 , height: 35 ,alignSelf: 'flex-end'}]} onPress={()=>setReligion([])}>
+              <Text style={[styles.buttonText , {alignSelf: 'center'}]}>clear</Text>
+            </TouchableOpacity>
         </View>
         <Text style={styles.inputText}>Height</Text>
         <TextInput
@@ -107,13 +109,14 @@ const DataInpu = () => {
         <Text style={styles.nextButtonText}>NEXT</Text>
       </TouchableOpacity>
     </View>
+    </ScrollView>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
     padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
@@ -124,6 +127,10 @@ const styles = StyleSheet.create({
     left: 20,
     padding: 10,
   },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+},
   backButtonText: {
     fontSize: 24,
     color: '#000',
@@ -132,8 +139,11 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 200,
+    height: 200,
+    borderColor: 'gray',
+    borderWidth: 2,
+    borderRadius: 20,
   },
   inputContainer: {
     width: '100%',
@@ -173,6 +183,26 @@ const styles = StyleSheet.create({
   nextButtonText: {
     color: '#FFF',
     fontSize: 16,
+  },
+  container1: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: "3%",
+    paddingVertical: 10,
+    
+  },
+  button: {
+    borderRadius: 25,
+    marginHorizontal: '5%',
+    borderColor: 'black',
+    borderWidth: 2,
+    paddingHorizontal: 5,
+  },
+  buttonText: {
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: '1%'
   },
 });
 

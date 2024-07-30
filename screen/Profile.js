@@ -11,13 +11,13 @@ const Profile = () => {
     { name: 'Pizza', image: require('../assets/pr/pizza-pr.png') },
     { name: 'Donut', image: require('../assets/pr/donut-pr.png') },
     { name: 'Fries', image: require('../assets/pr/fries-pr.png') },
-    { name: 'Lollipop', image: require('../assets/pr/lolipop-pr.png') }
+    { name: 'Lollipop', image: require('../assets/pr/lolipop-pr.png')}
   ];
 
   const handleSave = async () => {
     try {
       // Ensure the user update logic is awaited if it's async
-      await updateUser({ 'pr': itemPr.name });
+      await updateUser({ 'pr': itemPr.image });
     } catch (error) {
       Alert.alert("Error", "Failed to update user profile");
       console.error(error);
@@ -35,8 +35,7 @@ const Profile = () => {
   return (
     <ImageBackground source={require('../assets/bg-pr.png')} style={styles.backgroundImage}>
       <View style={styles.container}>
-        <Image source={itemPr.image} style={styles.displayedImage} />
-
+        <Image source={typeof itemPr.image === "number"? itemPr.image : {uri : itemPr.image}} style={styles.displayedImage} />
       </View>
       <View style={styles.container1}>
         <ImageBackground source={require('../assets/blur.png')} style={styles.blurImg}>
@@ -52,7 +51,7 @@ const Profile = () => {
                       console.error(error);
                     });
                   }}>
-                  <Image source={item.image} style={styles.itemImage} />
+                  <Image source={typeof item.image === "number"? item.image : {uri : item.image}} style={styles.itemImage} />
                 </TouchableOpacity>
               </View>
             ))}
