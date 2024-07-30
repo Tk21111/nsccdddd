@@ -21,6 +21,7 @@ import Data1 from './screen/Data1';
 import UserProfile from './screen/userProfile';
 import CalendarScreen from './screen/cald';
 import Hoo from './screen/hooo';
+import Noti from './screen/Noti';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,7 @@ const App = () => {
         <Stack.Screen name="Data1" component={Data1}/>
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="Carlendar" component={CalendarScreen}/>
+        <Stack.Screen name="Noti" component={Noti}/>
         <Stack.Screen name="List" component={List}/>
         <Stack.Screen name="ListUpdate" component={ListUpdate} />
         <Stack.Screen name="List:note" component={List1}/>

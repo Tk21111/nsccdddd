@@ -8,6 +8,8 @@ import Svg, { Path } from 'react-native-svg';
 import { PortalProvider, Portal } from '@gorhom/portal';
 import { Dialog } from 'react-native-paper';
 
+import { ransadsf } from '../hook/rand';
+
 const Home = () => {
   const navigation = useNavigation();
   const [userConfig, setUserConfig] = useState(null);
@@ -106,12 +108,12 @@ const Home = () => {
     <PortalProvider>
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity style={styles.notificationButton} onPress={() => navigation.navigate('Cmd')}>
+          <TouchableOpacity style={styles.notificationButton} onPress={() => navigation.navigate('Noti')}>
             <Image style={styles.imageH} source={require('../assets/Noti.png')} />
           </TouchableOpacity>
           <TouchableOpacity style={[styles.notificationButton, { marginLeft: 230 }]} onPress={() => navigation.navigate('Cmd')}>
             <Image
-              source={typeof userConfig.pr === "number"? userConfig.pr : {uri : userConfig.pr}} 
+              source={typeof userConfig?.pr === "number"? userConfig?.pr : {uri : userConfig?.pr} || require('../assets/Screenshot 2024-07-14 141018.png')} 
               style={[styles.imageH, { borderRadius: 12, borderWidth: 2, borderColor: 'black' }]}
             />
           </TouchableOpacity>
@@ -208,7 +210,7 @@ const Home = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.bottomRow}>
-          <TouchableOpacity style={[styles.cal, { borderRadius: 12, borderWidth: 2, borderColor: 'black', backgroundColor: 'white', alignSelf: 'center', paddingVertical: 7, marginBottom: 20 }]} onPress={() => rerand()}>
+          <TouchableOpacity style={[styles.cal, { borderRadius: 12, borderWidth: 2, borderColor: 'black', backgroundColor: 'white', alignSelf: 'center', paddingVertical: 7, marginBottom: 20 }]} onPress={() => ransadsf()}>
             <Text style={[styles.calText, { fontSize: 24 }]}>RANDOM</Text>
           </TouchableOpacity>
         </View>

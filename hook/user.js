@@ -7,7 +7,103 @@ const setUser = async (data) => {
 
     //change this before produc
     await createAndWriteFile('userConfigg.json', data);
-    await createAndWriteFile('food.json' , {"list_2000": [{"cal" : 2000 , "name": "sadij", "ingredent": "1.asdfsgd" , "healthy" : true , "like" : true}], "list_1000": [{"cal" : 1000 , "name": "sadij", "ingredent": "beef","healthy" : true , "like" : true}], "list_1500": [{"cal" : 1500 , "name": "sadij", "ingredent": "1.asdfsgd","healthy" : true , "like" : true}], "list_500": [{"name": "adsfdsdfg", "ingredent": "1.asfdgsfgd","cal" : 500,"healthy" : true , "like" : true },  {"name": "adsfg", "ingredent": "asdfdg" ,"cal": 500,"healthy" : true , "like" : true}, {"name": "aiykhjbmnfhn", "ingredent": "asdfdg", "cal" : 500,"healthy" : true , "like" : true}]});
+    await createAndWriteFile('food.json' ,
+        {
+            "list_500": [
+                {
+                    "cal": 500,
+                    "healthy": true,
+                    "ingredient": "spinach",
+                    "like": true,
+                    "name": "Spinach Salad"
+                },
+                {
+                    "cal": 500,
+                    "healthy": true,
+                    "ingredient": "chicken",
+                    "like": true,
+                    "name": "Grilled Chicken Breast"
+                },
+                {
+                    "cal": 500,
+                    "healthy": true,
+                    "ingredient": "quinoa",
+                    "like": false,
+                    "name": "Quinoa Bowl"
+                }
+            ],
+            "list_1000": [
+                {
+                    "cal": 1000,
+                    "healthy": true,
+                    "ingredient": "beef",
+                    "like": true,
+                    "name": "Beef Stir Fry"
+                },
+                {
+                    "cal": 1000,
+                    "healthy": false,
+                    "ingredient": "pasta",
+                    "like": true,
+                    "name": "Creamy Pasta"
+                },
+                {
+                    "cal": 1000,
+                    "healthy": true,
+                    "ingredient": "salmon",
+                    "like": true,
+                    "name": "Baked Salmon"
+                }
+            ],
+            "list_1500": [
+                {
+                    "cal": 1500,
+                    "healthy": true,
+                    "ingredient": "chicken",
+                    "like": true,
+                    "name": "Chicken and Veggie Bowl"
+                },
+                {
+                    "cal": 1500,
+                    "healthy": true,
+                    "ingredient": "beef",
+                    "like": false,
+                    "name": "Beef Tacos"
+                },
+                {
+                    "cal": 1500,
+                    "healthy": false,
+                    "ingredient": "pizza",
+                    "like": true,
+                    "name": "Pepperoni Pizza"
+                }
+            ],
+            "list_2000": [
+                {
+                    "cal": 2000,
+                    "healthy": true,
+                    "ingredient": "turkey",
+                    "like": true,
+                    "name": "Turkey and Rice"
+                },
+                {
+                    "cal": 2000,
+                    "healthy": true,
+                    "ingredient": "pork",
+                    "like": true,
+                    "name": "Pork Chops with Vegetables"
+                },
+                {
+                    "cal": 2000,
+                    "healthy": false,
+                    "ingredient": "lasagna",
+                    "like": true,
+                    "name": "Lasagna"
+                }
+            ]
+        }
+        
+    );
 
 };
 

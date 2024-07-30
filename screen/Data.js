@@ -35,7 +35,7 @@ const DataInpu = () => {
       try {
         console.log(religion)
         await foodListFilter(religion);
-        await updateUser({ age, religion, male,  bmi: (weight / (height ** 2)).toFixed(2) });
+        await updateUser({ age, religion, male,  bmi: (weight / (height ** 2)).toFixed(2) , cal : (male? 66+(13.7*weight)+(5*height) -(6.8*age) : 665+(9.6*weight)+(1.8*height)-(4.7*age)) });
         setAge('')
         setHeight(0);
         setWeight(0);
@@ -93,7 +93,7 @@ const DataInpu = () => {
           style={styles.input}
           value={height}
           onChangeText={setHeight}
-          placeholder="Height (m)"
+          placeholder="Height (cm)"
           keyboardType="numeric"
         />
         <Text style={styles.inputText}>Weight</Text>
