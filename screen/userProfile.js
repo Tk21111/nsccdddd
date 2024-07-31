@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { readFile } from '../fileManagement';
 import { foodListFilter } from '../hook/list';
 import Slider from '@react-native-community/slider';
+import HeaderR from './Header';
 
 const UserProfile = () => {
   const navigation = useNavigation();
@@ -53,6 +54,7 @@ const UserProfile = () => {
 
   return (
     <ImageBackground style={styles.backgroundImage}source={require('../assets/bg-profile.png')}>
+      <HeaderR/>
       <View style={styles.container}>
         <View style={styles.header}>
         <Image source={typeof data.pr === "number"? data.pr : {uri : data.pr}} style={styles.avatar}/>

@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import { setEx, setEat } from '../hook/rand';
 import { readFile } from '../fileManagement';
 import { FuncdateOnly } from '../data/dateOnly';
+
+import HeaderR from './Header';
 const Cal = () => {
   const [cal, setCal] = useState();
   const [Incal , setInCal] = useState();
@@ -39,6 +41,7 @@ const Cal = () => {
 
   return (
     <View style={styles.container}>
+      <HeaderR/>
       <View style={styles.header}>
         <View style={styles.iconWrapper}>
             <Image source={require('../assets/Screenshot 2024-07-14 141018.png')} style={styles.carrotIcon} />

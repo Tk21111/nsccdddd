@@ -31,22 +31,22 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         
-        <Stack.Screen name="Start" component={Start}/>
-        <Stack.Screen name="Username" component={Username}/>
-        <Stack.Screen name="Profile" component={Profile}/>
-        <Stack.Screen name="Datain" component={DataInpu}/>
-        <Stack.Screen name="Data1" component={Data1}/>
-        <Stack.Screen name="Home" component={Home}/>
-        <Stack.Screen name="Carlendar" component={CalendarScreen}/>
-        <Stack.Screen name="Noti" component={Noti}/>
-        <Stack.Screen name="List" component={List}/>
-        <Stack.Screen name="ListUpdate" component={ListUpdate} />
-        <Stack.Screen name="List:note" component={List1}/>
-        <Stack.Screen name="Hoo" component={Hoo}/>
-        <Stack.Screen name="Createuser" component={CreateUser} />
-        <Stack.Screen name="UserProfile" component={UserProfile} />
-        <Stack.Screen name="Calory" component={Cal} />
-        <Stack.Screen name="Cmd" component={Cmd}/>
+        <Stack.Screen options={{headerShown: false}} ame="Start" component={Start}/>
+        <Stack.Screen options={{headerShown: false}} name="Username" component={Username}/>
+        <Stack.Screen options={{headerShown: false}} name="Profile" component={Profile}/>
+        <Stack.Screen options={{headerShown: false}}name="Datain" component={DataInpu}/>
+        <Stack.Screen options={{headerShown: false}} name="Data1" component={Data1}/>
+        <Stack.Screen options={{headerShown: false}} name="Home" component={Home}/>
+        <Stack.Screen options={{headerShown: false}} name="Carlendar" component={CalendarScreen}/>
+        <Stack.Screen options={{headerShown: false}} name="Noti" component={Noti}/>
+        <Stack.Screen options={{headerShown: false}} name="List" component={List}/>
+        <Stack.Screen options={{headerShown: false}} name="ListUpdate" component={ListUpdate} />
+        <Stack.Screen options={{headerShown: false}}name="List:note" component={List1}/>
+        <Stack.Screen options={{headerShown: false}}name="Hoo" component={Hoo}/>
+        <Stack.Screen options={{headerShown: false}} name="Createuser" component={CreateUser} />
+        <Stack.Screen options={{headerShown: false}} name="UserProfile" component={UserProfile} />
+        <Stack.Screen options={{headerShown: false}} name="Calory" component={Cal} />
+        <Stack.Screen options={{headerShown: false}} name="Cmd" component={Cmd}/>
   
       </Stack.Navigator>
     </NavigationContainer>

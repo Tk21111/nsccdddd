@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { readFile } from '../fileManagement';
+import HeaderR from './Header';
 
 const List1 = () => {
     const navigation = useNavigation();
@@ -42,6 +43,7 @@ const List1 = () => {
 
     return (
         <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
+            <HeaderR/>
             <View style={styles.container}>
               <View style={styles.header}>
               <View style={styles.iconWrapper}>

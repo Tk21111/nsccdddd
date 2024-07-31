@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 
 import { updateUser } from '../hook/user';
+import HeaderR from './Header';
 
 const Username = () => {
     const navigation = useNavigation();
@@ -18,6 +19,7 @@ const Username = () => {
     */
     return(
         <ImageBackground style={styles.backgroundImage}source={require('../assets/bg-username.png')}>
+          <HeaderR/>
             <View>
                 <Text style={styles.label}>{"User name"}</Text>
                 <TextInput 

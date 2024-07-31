@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { foodListUpdate } from '../hook/list';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
+
+import HeaderR from './Header';
 
 const ListUpdate = () => {
   const [name, setName] = useState('');
@@ -43,6 +45,8 @@ const ListUpdate = () => {
 
   return (
     <View style={styles.container}>
+      <HeaderR/>
+  
       <View style={styles.header} />
 
       <TouchableOpacity onPress={pickImage}>
@@ -83,6 +87,7 @@ const ListUpdate = () => {
           <Text style={styles.saveButtonText}>SAVE</Text>
         </TouchableOpacity>
       </View>
+      
     </View>
   );
 };

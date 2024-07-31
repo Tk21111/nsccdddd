@@ -5,6 +5,7 @@ import { PortalProvider, Portal } from '@gorhom/portal';
 
 import { readFile } from '../fileManagement';
 import { updateLike, updateUnLike } from '../hook/list';
+import HeaderR from './Header';
 
 const List = () => {
   const navigation = useNavigation();
@@ -42,6 +43,7 @@ const List = () => {
 
   return (
     <ImageBackground source={require('../assets/bg-List1.png')} style={styles.backgroundImage}>
+      <HeaderR/>
       <PortalProvider>
         <View style={styles.container}>
           <View style={styles.header}>

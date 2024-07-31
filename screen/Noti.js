@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import { setEx, setEat } from '../hook/rand';
 import { readFile } from '../fileManagement';
 import { FuncdateOnly } from '../data/dateOnly';
+
+import HeaderR from './Header';
 const Noti = () => {
   const [cal, setCal] = useState();
   const [Incal , setInCal] = useState();
@@ -38,7 +40,10 @@ const Noti = () => {
   };
 
   return (
-    <ImageBackground source={require('../assets/bg-noti.png')} style={styles.backgroundImage} ></ImageBackground>
+    
+    <ImageBackground source={require('../assets/bg-noti.png')} style={styles.backgroundImage} >
+      <HeaderR/>
+    </ImageBackground>
   );
 };
 

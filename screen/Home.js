@@ -17,6 +17,14 @@ const Home = () => {
   const [dialogVisible, setDialogVisible] = useState({ L: false, D: false, B: false });
   const [date, setDate] = useState(FuncdateOnly());
 
+  const items = [
+    { name: 'Pizza', image: require('../assets/pr/pizza-pr.png') },
+    { name: 'Donut', image: require('../assets/pr/donut-pr.png') },
+    { name: 'Fries', image: require('../assets/pr/fries-pr.png') },
+    { name: 'Lollipop', image: require('../assets/pr/lolipop-pr.png')}
+  ];
+
+
   const fetchUserConfig = async () => {
     try {
       const config = await readFile('userConfigg.json');
@@ -113,7 +121,7 @@ const Home = () => {
           </TouchableOpacity>
           <TouchableOpacity style={[styles.notificationButton, { marginLeft: 230 }]} onPress={() => navigation.navigate('Cmd')}>
             <Image
-              source={typeof userConfig?.pr === "number"? userConfig?.pr : {uri : userConfig?.pr} || require('../assets/Screenshot 2024-07-14 141018.png')} 
+              source={ items[userConfig.pr].image} 
               style={[styles.imageH, { borderRadius: 12, borderWidth: 2, borderColor: 'black' }]}
             />
           </TouchableOpacity>

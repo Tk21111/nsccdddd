@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, ImageBackground, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { updateUser } from '../hook/user';
+import HeaderR from './Header';
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -17,7 +18,7 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       // Ensure the user update logic is awaited if it's async
-      await updateUser({ 'pr': itemPr.image });
+      await updateUser({ 'pr': itemPr.image , 'prName' : itemPr.name});
     } catch (error) {
       Alert.alert("Error", "Failed to update user profile");
       console.error(error);
@@ -34,6 +35,7 @@ const Profile = () => {
 
   return (
     <ImageBackground source={require('../assets/bg-pr.png')} style={styles.backgroundImage}>
+      <HeaderR/>
       <View style={styles.container}>
         <Image source={typeof itemPr.image === "number"? itemPr.image : {uri : itemPr.image}} style={styles.displayedImage} />
       </View>

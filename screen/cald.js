@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { cheeseDay } from '../hook/rand';
 import { readFile } from '../fileManagement';
+import HeaderR from './Header';
 
 const CalendarScreen = () => {
 
@@ -88,6 +89,7 @@ const CalendarScreen = () => {
   return (
     <PaperProvider>
       <ImageBackground style={styles.backgroundImage} source={require('../assets/bg-calendar.png')}>
+        <HeaderR/>
         <View style={styles.container}>
           <ImageBackground style={styles.backgroundImage1} source={require('../assets/bg-calendar-prop.png')}>
             <Calendar
@@ -118,13 +120,13 @@ const CalendarScreen = () => {
             <View style={styles.containment}>
               <View style={[styles.timePickerContainer, ,{borderRadius: 50,borderColor: 'black', borderWidth: 2,}]}>
                 <TouchableOpacity style={styles.timeButton} onPress={() => navigation.navigate('List:note', { paramName: data[0]?.name })}>
-                  <Text style={styles.timeButtonText}>{data[0]?.name || 'N/A'}</Text>
+                  <Text style={styles.timeButtonText}>{data[0]?.name?.substr(0,10) + ".." || 'N/A'}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.timeButton} onPress={() => navigation.navigate('List:note', { paramName: data[1]?.name })} >
-                  <Text style={styles.timeButtonText}>{data[1]?.name || 'N/A'}</Text>
+                  <Text style={styles.timeButtonText}>{data[1]?.name?.substr(0,10) + ".." || 'N/A'}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.timeButton} onPress={() => navigation.navigate('List:note', { paramName: data[2]?.name })} >
-                  <Text style={styles.timeButtonText}>{data[2]?.name || 'N/A'}</Text>
+                  <Text style={styles.timeButtonText}>{data[2]?.name?.substr(0,10) + ".." || 'N/A'}</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity

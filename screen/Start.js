@@ -4,16 +4,18 @@ import { useNavigation } from '@react-navigation/native';
 
 import { setUser } from '../hook/user';
 import { readFile } from '../fileManagement';
+import HeaderR from './Header';
 const Start = () => {
     const navigation = useNavigation();
     
     return(
         <ImageBackground style={styles.backgroundImage}source={require('../assets/start-page.png')}>
+            <HeaderR/>
             <View>
                 <Text style={styles.label}> {"FOOD Nutrition" + "\n"  + "Calculater App"}</Text>
                 <Text style={styles.label1}> {"we guarantee your good" + "\n"  + "heath and well-being"}</Text>
                 <TouchableOpacity style={styles.Button} onPress={() => {
-                  if(readFile('userConfigg.json')){
+                  if(!readFile('userConfigg.json')){
                     navigation.navigate('Home');
                   } else {
                     setUser({});

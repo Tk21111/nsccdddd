@@ -17,6 +17,13 @@ const DataInpu = () => {
 
   const [data, setData] = useState({ name: 'Donut' });
 
+  const items = [
+    { name: 'Pizza', image: require('../assets/pr/pizza-pr.png') },
+    { name: 'Donut', image: require('../assets/pr/donut-pr.png') },
+    { name: 'Fries', image: require('../assets/pr/fries-pr.png') },
+    { name: 'Lollipop', image: require('../assets/pr/lolipop-pr.png')}
+  ];
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,7 +38,7 @@ const DataInpu = () => {
   }, []);
 
   const handleNext = async () => {
-    if (age && religion && height && weight) {
+    if (age && height && weight) {
       try {
         console.log(religion)
         await foodListFilter(religion);

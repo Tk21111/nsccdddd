@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import HeaderR from './Header';
+
 const Data1 = () => {
   const navigation = useNavigation();
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -22,6 +24,7 @@ const Data1 = () => {
 
   return (
     <View style={styles.container}>
+      <HeaderR/>
       <Text style={styles.title}>What type of meal do you prefer?</Text>
       {options.map((optionGroup, index) => (
         <View key={index} style={styles.optionGroup}>
